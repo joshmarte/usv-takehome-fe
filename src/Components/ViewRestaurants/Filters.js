@@ -1,18 +1,13 @@
 // DEPENDENCIES
 import { useState } from "react";
 
-export default function Search(props) {
+export default function Filters(props) {
     // STATE VARIBILES
     const [visible, setVisible] = useState({
         cuisine: false,
         location: false,
         price: false,
     });
-
-    // SEARCH TEXT CHANGE
-    const handleChange = (event) => {
-        props.setSearchTerm(event.target.value);
-    };
 
     // CHECKBOX CHANGE
     const handleCheckboxChange = (event) => {
@@ -53,26 +48,8 @@ export default function Search(props) {
         });
     };
 
-    // JSX
     return (
-        <div>
-            <div className="search-div">
-                <form className="search-bar">
-                    <label htmlFor="search">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </label>
-                    <input
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Search restaurants, location or cuisine"
-                        name="search"
-                        id="searchTerm"
-                        value={props.searchTerm}
-                    />
-                    <input type="submit" />
-                </form>
-            </div>
-
+        <div className="filters-section">
             <div className="cuisineDropDown">
                 <div
                     id="list1"
@@ -161,9 +138,9 @@ export default function Search(props) {
                 }}
             >
                 <legend>Select a Price Range: </legend>
-                {props.price.map((item) => {
+                {props.price.map((item, index) => {
                     return (
-                        <div>
+                        <div key={index}>
                             <input
                                 type="radio"
                                 id={`price-${item}`}

@@ -1,8 +1,9 @@
 // DEPENDENCIES
 import "../Styles/View.css";
 import { useState, useEffect } from "react";
-import Search from "../Components/Search";
-import Restaurants from "../Components/Restaurants";
+import Search from "../Components/ViewRestaurants/SearchBar";
+import Filters from "../Components/ViewRestaurants/Filters";
+import Restaurants from "../Components/ViewRestaurants/Restaurants";
 const API = process.env.REACT_APP_API_URL;
 
 export default function ViewRestaurants() {
@@ -76,9 +77,8 @@ export default function ViewRestaurants() {
     // JSX
     return (
         <div>
-            <Search
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
+            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <Filters
                 cuisine={cuisine}
                 setCuisine={setCuisine}
                 location={location}
