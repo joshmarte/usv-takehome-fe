@@ -9,7 +9,7 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
     };
 
     // JSX
-    return (
+    return (<div className="searchBar-container">
         <Form
             style={{
                 width: "50vw",
@@ -34,5 +34,6 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
                 </InputGroup>
             </Form.Group>
         </Form>
+        </div>
     );
 }

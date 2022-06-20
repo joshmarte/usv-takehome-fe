@@ -6,12 +6,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 export default function Filters(props) {
-    // STATE VARIBILES
-    const [visible, setVisible] = useState({
-        cuisine: false,
-        location: false,
-        price: false,
-    });
 
     // CHECKBOX CHANGE
     const handleCheckboxChange = (event) => {
@@ -25,7 +19,7 @@ export default function Filters(props) {
                 ],
             });
         }
-        // HANDLE RADIO FOR PRICE (ONLY ONE SELECTION)
+        // HANDLE UNCHECKING SELECTION REMOVING ITEM FROM STATE AND API CALL
         else {
             let index = props.userFilters[event.target.id].indexOf(
                 event.target.value
@@ -40,11 +34,9 @@ export default function Filters(props) {
                 });
             }
         }
-        setVisible({
-            ...setVisible,
-            [event.target.value]: !visible[event.target.value],
-        });
-    };
+      
+    }
+ 
 
     // HANDLE RESET
     const handleReset = (event) => {
@@ -89,7 +81,7 @@ export default function Filters(props) {
                     id="dropdown-button-dark-example2"
                     variant="secondary"
                     menuVariant="dark"
-                    title="Select location"
+                    title="Select Location"
                 >
                     {props.location.map((item, index) => {
                         return (
@@ -114,7 +106,7 @@ export default function Filters(props) {
                     id="dropdown-button-dark-example2"
                     variant="secondary"
                     menuVariant="dark"
-                    title="Select price"
+                    title="Select Price"
                 >
                     <Dropdown.ItemText>
                         <Form
@@ -139,26 +131,19 @@ export default function Filters(props) {
                                         type="radio"
                                         id="price"
                                         label={item}
-                                        value={item}
+                                        value={item === 'Any' ? "" : item}
                                         name="price-group"
                                     />
                                 );
                             })}
-                            <Form.Check
-                                type="radio"
-                                id="price"
-                                label="Any"
-                                value=""
-                                name="price-group"
-                            />
                         </Form>
                     </Dropdown.ItemText>
                 </DropdownButton>
             </div>
             <Button
-                variant="primary"
+                variant="outline-*"
                 onClick={handleReset}
-                style={{ backgroundColor: "orange" }}
+                style={{ backgroundColor: "orange", color:"white"}}
             >
                 Reset
             </Button>

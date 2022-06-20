@@ -15,7 +15,7 @@ export default function ViewRestaurants() {
     // FORM DATA TO DISPLAY FROM API
     const [cuisine, setCuisine] = useState([]);
     const [location, setLocation] = useState([]);
-    const [price, setPrice] = useState(["$", "$$", "$$$", "$$$$"]);
+    const [price, setPrice] = useState(["$", "$$", "$$$", "$$$$", "Any"]);
 
     // USER SELECTIONS: SEARCH & FILTERS TERMS
     const [searchTerm, setSearchTerm] = useState("");
@@ -76,8 +76,9 @@ export default function ViewRestaurants() {
 
     // JSX
     return (
-        <div>
+        <div className="viewRestaurants-container">
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <div className="filterAndRestaurant">
             <Filters
                 cuisine={cuisine}
                 setCuisine={setCuisine}
@@ -90,6 +91,7 @@ export default function ViewRestaurants() {
                 setSearchTerm={setSearchTerm}
             />
             <Restaurants restaurants={restaurants} />
+            </div>
         </div>
     );
 }
