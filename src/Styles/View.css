@@ -1,27 +1,33 @@
-.filterAndRestaurant{
+.viewRestaurants-container {
+    margin-top: 100px;
+    position: relative;
+}
+.search-filter {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     width: 70vw;
     border: 1px dashed orange;
-    padding: 5px;
-    gap: 30px;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 10px;
+    align-items: center;
 }
 
-.filters-section{
-    display:flex;
+.filters-container {
+    display: flex;
     padding: 5px;
     justify-content: center;
     flex-direction: row;
 }
 
-.filters-section > * {
+.filters-container > * {
     padding: 5px;
 }
 
 .restaurants-container {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 30px;
 }
@@ -31,4 +37,5 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 10px;}
+    gap: 10px;
+}

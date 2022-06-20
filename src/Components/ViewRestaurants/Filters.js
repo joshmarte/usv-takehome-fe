@@ -1,12 +1,10 @@
 // DEPENDENCIES
-import { useState } from "react";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 export default function Filters(props) {
-
     // CHECKBOX CHANGE
     const handleCheckboxChange = (event) => {
         let check = event.target.checked;
@@ -34,9 +32,7 @@ export default function Filters(props) {
                 });
             }
         }
-      
-    }
- 
+    };
 
     // HANDLE RESET
     const handleReset = (event) => {
@@ -50,7 +46,7 @@ export default function Filters(props) {
     };
 
     return (
-        <div className="filters-section">
+        <div className="filters-container">
             <div className="cuisineDropDown">
                 <DropdownButton
                     id="dropdown-button-dark-example2"
@@ -131,7 +127,7 @@ export default function Filters(props) {
                                         type="radio"
                                         id="price"
                                         label={item}
-                                        value={item === 'Any' ? "" : item}
+                                        value={item === "Any" ? "" : item}
                                         name="price-group"
                                     />
                                 );
@@ -140,13 +136,15 @@ export default function Filters(props) {
                     </Dropdown.ItemText>
                 </DropdownButton>
             </div>
-            <Button
-                variant="outline-*"
-                onClick={handleReset}
-                style={{ backgroundColor: "orange", color:"white"}}
-            >
-                Reset
-            </Button>
+            <div className="reset-button">
+                <Button
+                    variant="outline-*"
+                    onClick={handleReset}
+                    style={{ backgroundColor: "orange", color: "white" }}
+                >
+                    Reset
+                </Button>
+            </div>
         </div>
     );
 }

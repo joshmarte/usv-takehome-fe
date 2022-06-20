@@ -77,20 +77,24 @@ export default function ViewRestaurants() {
     // JSX
     return (
         <div className="viewRestaurants-container">
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <div className="filterAndRestaurant">
-            <Filters
-                cuisine={cuisine}
-                setCuisine={setCuisine}
-                location={location}
-                setLocation={setLocation}
-                price={price}
-                setPrice={setPrice}
-                userFilters={userFilters}
-                setUserFilters={setUserFilters}
-                setSearchTerm={setSearchTerm}
-            />
-            <Restaurants restaurants={restaurants} />
+            <div className="search-filter">
+                <h3>Find your reservation for any occasion</h3>
+                <SearchBar
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
+                <Filters
+                    cuisine={cuisine}
+                    setCuisine={setCuisine}
+                    location={location}
+                    setLocation={setLocation}
+                    price={price}
+                    setPrice={setPrice}
+                    userFilters={userFilters}
+                    setUserFilters={setUserFilters}
+                    setSearchTerm={setSearchTerm}
+                />
+                <Restaurants restaurants={restaurants} />
             </div>
         </div>
     );
