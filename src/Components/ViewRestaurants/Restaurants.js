@@ -2,10 +2,10 @@
 import Restaurant from "./Restaurant";
 
 // FUNCATIONAL COMPONENT
-export default function Restaurants(props) {
+export default function Restaurants({ restaurants }) {
     return (
         <div className="restaurants-container">
-            {props.restaurants.map((item) => {
+            {restaurants.map((item) => {
                 return <Restaurant key={item.id} data={item} />;
             })}
         </div>

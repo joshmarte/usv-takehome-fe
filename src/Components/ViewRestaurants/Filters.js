@@ -1,5 +1,9 @@
 // DEPENDENCIES
 import { useState } from "react";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default function Filters(props) {
     // STATE VARIBILES
@@ -20,7 +24,9 @@ export default function Filters(props) {
                     event.target.value,
                 ],
             });
-        } else {
+        }
+        // HANDLE RADIO FOR PRICE (ONLY ONE SELECTION)
+        else {
             let index = props.userFilters[event.target.id].indexOf(
                 event.target.value
             );
@@ -40,131 +46,122 @@ export default function Filters(props) {
         });
     };
 
-    // DROP DOWN ON CLICK
-    const handleDropDownClick = (event) => {
-        setVisible({
-            ...visible,
-            [event.target.id]: !visible[event.target.id],
+    // HANDLE RESET
+    const handleReset = (event) => {
+        event.preventDefault();
+        props.setSearchTerm("");
+        props.setUserFilters({
+            location: [],
+            cuisine: [],
+            price: [],
         });
     };
 
     return (
         <div className="filters-section">
             <div className="cuisineDropDown">
-                <div
-                    id="list1"
-                    className={
-                        visible.cuisine || props.userFilters.cuisine.length > 0
-                            ? "dropdown-check-list visible"
-                            : "dropdown-check-list"
-                    }
-                    tabIndex="100"
+                <DropdownButton
+                    id="dropdown-button-dark-example2"
+                    variant="secondary"
+                    menuVariant="dark"
+                    title="Select Cuisine"
                 >
-                    <span
-                        className="anchor"
-                        onClick={handleDropDownClick}
-                        id="cuisine"
-                    >
-                        Select Cuisines
-                    </span>
-                    <ul className="items">
-                        {props.cuisine.map((item, index) => {
-                            return (
-                                <li key={index}>
-                                    <input
+                    {props.cuisine.map((item, index) => {
+                        return (
+                            <Dropdown.ItemText key={index}>
+                                <Form>
+                                    <Form.Check
                                         type="checkbox"
                                         id="cuisine"
-                                        value={item}
+                                        label={item}
                                         onChange={handleCheckboxChange}
+                                        value={item}
                                     />
-                                    {item}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
+                                </Form>
+                            </Dropdown.ItemText>
+                        );
+                    })}
+                </DropdownButton>
             </div>
 
             <div className="locationDropDown">
-                <div
-                    id="list1"
-                    className={
-                        visible.location ||
-                        props.userFilters.location.length > 0
-                            ? "dropdown-check-list visible"
-                            : "dropdown-check-list"
-                    }
-                    tabIndex="100"
+                <DropdownButton
+                    id="dropdown-button-dark-example2"
+                    variant="secondary"
+                    menuVariant="dark"
+                    title="Select location"
                 >
-                    <span
-                        className="anchor"
-                        onClick={handleDropDownClick}
-                        id="location"
-                    >
-                        Select Locations
-                    </span>
-                    <ul className="items">
-                        {props.location.map((item, index) => {
-                            return (
-                                <li key={index}>
-                                    <input
+                    {props.location.map((item, index) => {
+                        return (
+                            <Dropdown.ItemText key={index}>
+                                <Form>
+                                    <Form.Check
                                         type="checkbox"
                                         id="location"
-                                        value={item}
+                                        label={item}
                                         onChange={handleCheckboxChange}
+                                        value={item}
                                     />
-                                    {item}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
+                                </Form>
+                            </Dropdown.ItemText>
+                        );
+                    })}
+                </DropdownButton>
             </div>
 
-            <fieldset
-                className="price-radio"
-                onChange={(event) => {
-                    if (event.target.value) {
-                        props.setUserFilters({
-                            ...props.userFilters,
-                            [event.target.name]: [event.target.value],
-                        });
-                    } else {
-                        props.setUserFilters({
-                            ...props.userFilters,
-                            [event.target.name]: [],
-                        });
-                    }
-                }}
-            >
-                <legend>Select a Price Range: </legend>
-                {props.price.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <input
+            <div className="priceDropDown">
+                <DropdownButton
+                    id="dropdown-button-dark-example2"
+                    variant="secondary"
+                    menuVariant="dark"
+                    title="Select price"
+                >
+                    <Dropdown.ItemText>
+                        <Form
+                            onChange={(event) => {
+                                if (event.target.value) {
+                                    props.setUserFilters({
+                                        ...props.userFilters,
+                                        [event.target.id]: [event.target.value],
+                                    });
+                                } else {
+                                    props.setUserFilters({
+                                        ...props.userFilters,
+                                        [event.target.id]: [],
+                                    });
+                                }
+                            }}
+                        >
+                            {props.price.map((item, index) => {
+                                return (
+                                    <Form.Check
+                                        key={index}
+                                        type="radio"
+                                        id="price"
+                                        label={item}
+                                        value={item}
+                                        name="price-group"
+                                    />
+                                );
+                            })}
+                            <Form.Check
                                 type="radio"
-                                id={`price-${item}`}
-                                name="price"
-                                value={item}
+                                id="price"
+                                label="Any"
+                                value=""
+                                name="price-group"
                             />
-                            <label htmlFor="price">{item}</label>
-                        </div>
-                    );
-                })}
-                <div>
-                    <input type="radio" id="price-none" name="price" value="" />
-                    <label htmlFor="price">Any</label>
-                </div>
-            </fieldset>
-            {/* <button
-                onClick={props.setUserFilters({
-                    location: [],
-                    cuisine: [],
-                    price: [],
-                })}
+                        </Form>
+                    </Dropdown.ItemText>
+                </DropdownButton>
+            </div>
+            <Button
+                variant="primary"
+                onClick={handleReset}
+                style={{ backgroundColor: "orange" }}
             >
-                Clear Filters
-            </button> */}
+                Reset
+            </Button>
         </div>
     );
 }

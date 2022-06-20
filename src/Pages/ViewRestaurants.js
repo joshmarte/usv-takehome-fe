@@ -1,7 +1,7 @@
 // DEPENDENCIES
 import "../Styles/View.css";
 import { useState, useEffect } from "react";
-import Search from "../Components/ViewRestaurants/SearchBar";
+import SearchBar from "../Components/ViewRestaurants/SearchBar";
 import Filters from "../Components/ViewRestaurants/Filters";
 import Restaurants from "../Components/ViewRestaurants/Restaurants";
 const API = process.env.REACT_APP_API_URL;
@@ -18,7 +18,7 @@ export default function ViewRestaurants() {
     const [price, setPrice] = useState(["$", "$$", "$$$", "$$$$"]);
 
     // USER SELECTIONS: SEARCH & FILTERS TERMS
-    const [searchTerm, setSearchTerm] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [userFilters, setUserFilters] = useState({
         location: [],
         cuisine: [],
@@ -77,7 +77,7 @@ export default function ViewRestaurants() {
     // JSX
     return (
         <div>
-            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <Filters
                 cuisine={cuisine}
                 setCuisine={setCuisine}
@@ -87,6 +87,7 @@ export default function ViewRestaurants() {
                 setPrice={setPrice}
                 userFilters={userFilters}
                 setUserFilters={setUserFilters}
+                setSearchTerm={setSearchTerm}
             />
             <Restaurants restaurants={restaurants} />
         </div>
