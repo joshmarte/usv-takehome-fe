@@ -41,31 +41,3 @@ export default function Navigation() {
         </div>
     );
 }
-
-{
-    /* <div className="NavBar">
-    <Nav activeKey="/home">
-        <Nav.Item>
-            <Nav.Link
-                href="/"
-                style={{
-                    backgroundColor: "orange",
-                    color: "white",
-                    borderRadius: "10px",
-                }}
-            >
-                Hungry Humans
-            </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-            <Nav.Link href="/restaurants">Restaurants</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-            <Nav.Link href="/newRestaurant">Add a Restaurant</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-            <Nav.Link href="/reservations"> Reservations</Nav.Link>
-        </Nav.Item>
-    </Nav>
-</div>; */
-}

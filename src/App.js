@@ -1,11 +1,12 @@
 // DEPENDENCIES
 import { Route, Routes } from "react-router-dom";
+// STYLES
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // COMPONENETS
 import Navigation from "./Components/Navigation";
 import ViewRestaurants from "./Pages/ViewRestaurants";
-import ResaurantDetails from "./Components/RestaurantDetails";
+import SingleDetail from "./Pages/SingleDetail";
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
             <Navigation />
             <Routes>
                 <Route path="/restaurants" element={<ViewRestaurants />} />
-                <Route path="/restaurants/:id" element={<ResaurantDetails />} />
+                <Route path="/restaurants/:id" element={<SingleDetail />} />
             </Routes>
         </main>
     );

@@ -1,9 +1,12 @@
 // DEPENDENCIES
-import "../Styles/View.css";
 import { useState, useEffect } from "react";
+//COMPONENTS
 import SearchBar from "../Components/ViewRestaurants/SearchBar";
 import Filters from "../Components/ViewRestaurants/Filters";
 import Restaurants from "../Components/ViewRestaurants/Restaurants";
+//STYLES
+import "../Styles/View.css";
+
 const API = process.env.REACT_APP_API_URL;
 
 export default function ViewRestaurants() {

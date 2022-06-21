@@ -1,8 +1,11 @@
 // DEPENDENCIES
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
+//ASSETS
+import logo from "../../Assets/logo.png";
+//UTIL
+import dateTime from "../../util/dateTime.js";
 
 export default function Restaurant({ data }) {
     let navigate = useNavigate();
@@ -16,6 +19,7 @@ export default function Restaurant({ data }) {
             <Card.Img
                 variant="left"
                 src={logo}
+                alt="Restaurant Logo"
                 style={{
                     maxWidth: "200px",
                     height: "auto",
@@ -61,16 +65,4 @@ export default function Restaurant({ data }) {
             </Card>
         </div>
     );
-}
-
-function dateTime(timeString) {
-    let timeString12hr = new Date(
-        "2022-01-01T" + timeString + "Z"
-    ).toLocaleTimeString("en-US", {
-        timeZone: "UTC",
-        hour12: true,
-        hour: "numeric",
-        minute: "numeric",
-    });
-    return timeString12hr;
 }

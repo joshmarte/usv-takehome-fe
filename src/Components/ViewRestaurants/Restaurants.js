@@ -1,4 +1,4 @@
-// DEPENDENCIES
+// COMPONENTS
 import Restaurant from "./Restaurant";
 
 // FUNCATIONAL COMPONENT
