@@ -39,3 +39,27 @@
     justify-content: center;
     gap: 10px;
 }
+
+@media screen and (max-device-width: 992px) {
+    .NavBar {
+        width: 100vw;
+    }
+    .search-filter {
+        width: 90vw;
+        align-items: flex-start;
+    }
+    .searchBar-container form {
+        margin: 0px;
+    }
+    .searchBar-container,
+    .input-group {
+        width: 70vw;
+    }
+
+    .card-img-left {
+        display: none;
+    }
+    .filters-container {
+        flex-direction: column;
+    }
+}

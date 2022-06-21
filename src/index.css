@@ -9,7 +9,11 @@
     right: 0;
     z-index: 9999;
     width: 100%;
-    height: 50px;
+    height: 55px;
     background: linear-gradient(45deg, wheat, orange 100%);
     font-size: larger;
+}
+
+.NavBar .nav-item {
+    margin-top: 5px;
 }

@@ -9,15 +9,15 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
     };
 
     // JSX
-    return (<div className="searchBar-container">
-        <Form
-            style={{
-                width: "50vw",
-                margin: "0 auto",
-                padding: "5px",
-            }}
-        >
-            <Form.Group>
+    return (
+        <div className="searchBar-container">
+            <Form
+                style={{
+                    width: "50vw",
+                    margin: "0 auto",
+                    padding: "5px",
+                }}
+            >
                 <InputGroup>
                     <InputGroup.Text>
                         <i className="fa-solid fa-magnifying-glass"></i>
@@ -32,8 +32,7 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
                         style={{ border: "1px solid orange" }}
                     />
                 </InputGroup>
-            </Form.Group>
-        </Form>
+            </Form>
         </div>
     );
 }
