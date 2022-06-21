@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import "../Styles/Detail.css";
 //COMPONENTS
 import ResaurantDetails from "../Components/RestaurantDetails/RestaurantDetails";
-import CreateReservation from "../Components/RestaurantDetails/CreateReservation";
+import ReservationCard from "../Components/RestaurantDetails/ReservationCard";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -45,7 +45,7 @@ export default function SingleDetail() {
             }}
         >
             <ResaurantDetails restaurant={restaurant} />
-            <CreateReservation restaurant={restaurant} />
+            <ReservationCard restaurant={restaurant} />
         </div>
     );
 }

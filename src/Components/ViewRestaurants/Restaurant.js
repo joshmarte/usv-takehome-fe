@@ -40,7 +40,7 @@ export default function Restaurant({ data }) {
                             paddingLeft: "10px",
                         }}
                     >
-                        <i class="fa-solid fa-location-dot"></i>
+                        <i className="fa-solid fa-location-dot"></i>
                         {`${data.location} (${dateTime(
                             data.openingTime
                         )} - ${dateTime(data.closingTime)})`}

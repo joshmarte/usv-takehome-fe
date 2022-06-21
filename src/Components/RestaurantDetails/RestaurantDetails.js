@@ -31,15 +31,15 @@ export default function ResaurantDetails({ restaurant }) {
                             padding: "10px",
                         }}
                     >
-                        <i class="fa-solid fa-location-dot"></i>
+                        <i className="fa-solid fa-location-dot"></i>
                         {restaurant.location}
 
-                        <i class="fa-regular fa-clock"></i>
+                        <i className="fa-regular fa-clock"></i>
                         {`${dateTime(restaurant.openingTime)} - ${dateTime(
                             restaurant.closingTime
                         )}`}
 
-                        <i class="fa-solid fa-sack-dollar"></i>
+                        <i className="fa-solid fa-sack-dollar"></i>
                         {restaurant.price}
                     </Card.Subtitle>
                     <Card.Text>{restaurant.description}</Card.Text>
