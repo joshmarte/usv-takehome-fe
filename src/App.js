@@ -7,15 +7,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./Components/Navigation";
 import ViewRestaurants from "./Pages/ViewRestaurants";
 import SingleDetail from "./Pages/SingleDetail";
+import Footer from "./Components/Footer";
 
 function App() {
     return (
         <main className="App">
-            <Navigation />
-            <Routes>
-                <Route path="/restaurants" element={<ViewRestaurants />} />
-                <Route path="/restaurants/:id" element={<SingleDetail />} />
-            </Routes>
+            <div id="content-wrap">
+                <Navigation />
+                <Routes>
+                    <Route path="/restaurants" element={<ViewRestaurants />} />
+                    <Route path="/restaurants/:id" element={<SingleDetail />} />
+                </Routes>
+            </div>
+            <Footer />
         </main>
     );
 }
