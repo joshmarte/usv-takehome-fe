@@ -1,11 +1,11 @@
 // DEPENDENCIES
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 //STYLE
 import "../Styles/Detail.css";
 //COMPONENTS
 import ResaurantDetails from "../Components/RestaurantDetails/RestaurantDetails";
-import ReservationCard from "../Components/RestaurantDetails/ReservationCard";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -45,7 +45,6 @@ export default function SingleDetail() {
             }}
         >
             <ResaurantDetails restaurant={restaurant} />
-            <ReservationCard restaurant={restaurant} />
         </div>
     );
 }

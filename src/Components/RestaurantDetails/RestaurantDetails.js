@@ -1,10 +1,16 @@
 // DEPENDENCIES
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useState } from "react";
 //UTIL
 import dateTime from "../../util/dateTime.js";
+//COMPONENT
+import ReservationCard from "../Reservations/ReservationCard";
 
 export default function ResaurantDetails({ restaurant }) {
+    // STATE FOR MODAL
+    const [modalShow, setModalShow] = useState(false);
+
     // JSX
     return (
         <div className="restaurant-details">
@@ -44,6 +50,7 @@ export default function ResaurantDetails({ restaurant }) {
                     </Card.Subtitle>
                     <Card.Text>{restaurant.description}</Card.Text>
                     <div className="details-buttons">
+                        <ReservationCard restaurant={restaurant} />
                         <Button
                             variant="primary"
                             style={{ marginRight: "5px" }}

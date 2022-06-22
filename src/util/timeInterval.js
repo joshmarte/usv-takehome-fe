@@ -1,7 +1,7 @@
 export default function interval(start, stop) {
     if (start && stop) {
         let timeInterval = [];
-
+        let today = new Date();
         // creating time object
         let open = new Date();
         let [hours, minutes] = start.split(":");
@@ -19,13 +19,15 @@ export default function interval(start, stop) {
 
         while (open < close) {
             open.setMinutes(open.getMinutes() + step);
-            let value = open.toLocaleTimeString("en-US", {
-                timeZone: "EST",
-                hour12: true,
-                hour: "numeric",
-                minute: "numeric",
-            });
-            timeInterval.push(value);
+            if (today > open) {
+                let value = open.toLocaleTimeString("en-US", {
+                    timeZone: "EST",
+                    hour12: true,
+                    hour: "numeric",
+                    minute: "numeric",
+                });
+                timeInterval.push(value);
+            }
         }
 
         return timeInterval;
