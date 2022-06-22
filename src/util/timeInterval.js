@@ -2,6 +2,8 @@ export default function interval(start, stop) {
     if (start && stop) {
         let timeInterval = [];
         let today = new Date();
+        today.setHours(today.getHours() + 1);
+
         // creating time object
         let open = new Date();
         let [hours, minutes] = start.split(":");
@@ -19,7 +21,7 @@ export default function interval(start, stop) {
 
         while (open < close) {
             open.setMinutes(open.getMinutes() + step);
-            if (today > open) {
+            if (today < close && today < open) {
                 let value = open.toLocaleTimeString("en-US", {
                     timeZone: "EST",
                     hour12: true,
