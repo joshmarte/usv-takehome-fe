@@ -8,7 +8,7 @@ export default function Navigation() {
     return (
         <div className="NavBar">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
+                <Container style={{ marginLeft: "0px", padding: " 0px 2rem" }}>
                     <Navbar.Brand
                         href="/"
                         style={{

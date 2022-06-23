@@ -8,6 +8,7 @@ import Navigation from "./Components/Navigation";
 import ViewRestaurants from "./Pages/ViewRestaurants";
 import SingleDetail from "./Pages/SingleDetail";
 import Footer from "./Components/Footer";
+import Home from "./Components/Home";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
             <div id="content-wrap">
                 <Navigation />
                 <Routes>
+                    <Route path="/" element={<Home />} />
                     <Route path="/restaurants" element={<ViewRestaurants />} />
                     <Route path="/restaurants/:id" element={<SingleDetail />} />
                 </Routes>

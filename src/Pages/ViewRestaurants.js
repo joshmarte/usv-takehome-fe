@@ -1,5 +1,6 @@
 // DEPENDENCIES
 import { useState, useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
 //COMPONENTS
 import SearchBar from "../Components/ViewRestaurants/SearchBar";
 import Filters from "../Components/ViewRestaurants/Filters";
@@ -97,7 +98,13 @@ export default function ViewRestaurants() {
                     setUserFilters={setUserFilters}
                     setSearchTerm={setSearchTerm}
                 />
-                <Restaurants restaurants={restaurants} />
+                {restaurants.length < 1 ? (
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                ) : (
+                    <Restaurants restaurants={restaurants} />
+                )}
             </div>
         </div>
     );

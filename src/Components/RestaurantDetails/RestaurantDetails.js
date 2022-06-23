@@ -1,13 +1,21 @@
 // DEPENDENCIES
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useState } from "react";
 
 //UTIL
 import dateTime from "../../util/dateTime.js";
 //COMPONENT
 import ReservationModal from "../Reservations/ReservationModal";
+import DeleteRestaurants from "./DeleteRestaurant.js";
 
 export default function ResaurantDetails({ restaurant }) {
+    // DELETE MODAL
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     // JSX
     return (
         <div className="restaurant-details">
@@ -18,7 +26,7 @@ export default function ResaurantDetails({ restaurant }) {
                 style={{
                     width: "75vw",
                     height: "500px",
-                    marginBottom: "20px",
+                    marginBottom: "60px",
                 }}
             />
             <Card style={{ width: "75vw", display: "flex" }}>
@@ -57,8 +65,11 @@ export default function ResaurantDetails({ restaurant }) {
                         >
                             Update
                         </Button>
-                        <Button variant="danger">Delete</Button>
+                        <Button variant="danger" onClick={handleShow}>
+                            Delete
+                        </Button>
                     </div>
+                    <DeleteRestaurants handleClose={handleClose} show={show} />
                 </Card.Body>
             </Card>
         </div>
