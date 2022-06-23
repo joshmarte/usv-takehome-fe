@@ -9,7 +9,7 @@ export default function Footer() {
                 className="bg-dark text-white card-container"
                 style={{ borderRadius: "0" }}
             >
-                <Card.Title style={{ marginBottom: "3px" }}>
+                <Card.Title style={{ margin: "5px 0px" }}>
                     <Card.Img
                         src={logo}
                         alt="Hungry Humans"
@@ -17,7 +17,7 @@ export default function Footer() {
                     />
                     Hungy Humans
                 </Card.Title>
-                <Card.Text>
+                <Card.Body>
                     <ul>
                         <li>
                             <a href="/">About</a>
@@ -35,13 +35,13 @@ export default function Footer() {
                             <a href="/">Privacy</a>
                         </li>
                     </ul>
-                </Card.Text>
-                <Card.Text>
+                </Card.Body>
+                <Card.Body>
                     <ul>
                         <li>Josh Marte</li>
                         <li>© 2022</li>
                     </ul>
-                </Card.Text>
+                </Card.Body>
             </Card>
         </div>
     );

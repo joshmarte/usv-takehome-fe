@@ -1,0 +1,25 @@
+export const details = {
+    cuisine: [
+        "Japanese",
+        "Thai",
+        "French",
+        "Pizza",
+        "Korean",
+        "American",
+        "Mexican",
+        "Greek",
+        "Chinese",
+        "Other",
+    ],
+    location: [
+        "New York",
+        "Brooklyn",
+        "Queens",
+        "Bronx",
+        "Manhattan",
+        "Staten Island",
+        "Boston",
+        "D.C.",
+        "Long Island",
+    ],
+};

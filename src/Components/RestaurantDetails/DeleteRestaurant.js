@@ -1,9 +1,10 @@
 // DEPENDENCIES
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { useParams } from "react-router-dom";
 const API = process.env.REACT_APP_API_URL;
 
-export default function DeleteRestaurants({ handleClose, show }) {
+export default function DeleteRestaurants({ handleClose, show, name }) {
     // PARAMS
     let { id } = useParams();
 
@@ -33,7 +34,7 @@ export default function DeleteRestaurants({ handleClose, show }) {
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
+                    <Modal.Title>{`Are you sure you want to delete ${name} ?`}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body autoFocus>
                     This Action can not be undone! Click Understood to delete
@@ -43,7 +44,7 @@ export default function DeleteRestaurants({ handleClose, show }) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Understood</Button>
+                    <Button variant="danger">Understood</Button>
                 </Modal.Footer>
             </Modal>
         </div>
