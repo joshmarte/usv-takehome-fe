@@ -1,6 +1,12 @@
+/**
+ * handling nested object
+ * handling patch
+ * handling time for patch
+ */
+
 //DEPENDENCIES
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -9,6 +15,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { details } from "../../util/cusineandlocation.js";
 import { FormGroup } from "react-bootstrap";
+import interval from "../../util/timeInterval.js";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -17,21 +24,41 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
     let { id } = useParams();
 
     // STATE FOR UPDATES
-    const [updateRestaurant, setUpdateRestaurant] = useState({
-        name: restaurant.name,
-        description: restaurant.description,
-        phoneNumber: restaurant.phoneNumber,
-        openingTime: restaurant.openingTime,
-        closingTime: restaurant.closingTime,
-        location: restaurant.location,
-        cuisine: restaurant.cuisine,
-        price: restaurant.price,
-        diningRestriction: restaurant.diningRestriction,
-        tables: restaurant.tables,
+    const [updateRestaurant, setUpdateRestaurant] = useState({});
+
+    // STATE FOR INTERVAL
+    const [intervals, setInterval] = useState(interval("00:00:00", "24:00:00"));
+    const [openTime, setOpenTime] = useState();
+    const [closeTime, setCloseTime] = useState();
+    const [tables, setTables] = useState({
+        twoPersonTables: 0,
+        fourPersonTables: 0,
+        eightPersonTables: 0,
     });
 
-    // HANDLE CHANGE
-    const handleChange = (event) => {};
+    //
+    useEffect(() => {
+        setUpdateRestaurant(restaurant);
+        setOpenTime(Time(restaurant.openingTime));
+        setCloseTime(Time(restaurant.closingTime));
+        setTables(restaurant.tables);
+    }, [restaurant]);
+
+    // HANDLE CHANGE...NESTED?
+    const handleChange = (event) => {
+        if (event.target.id === "tables") {
+            setUpdateRestaurant({
+                ...updateRestaurant,
+                [event.target.id]: event.target.value,
+            });
+        } else {
+            setUpdateRestaurant({
+                ...updateRestaurant,
+                [event.target.id]: event.target.value,
+            });
+        }
+        console.log(updateRestaurant, event.target.value);
+    };
 
     // HANDLE SUBMIT
     const handleSubmit = (event) => {
@@ -64,7 +91,9 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
+                scrollable={true}
                 centered
+                style={{ marginTop: "50px" }}
             >
                 <Modal.Header closeButton>
                     <Modal.Title>{`Update ${restaurant.name}`}</Modal.Title>
@@ -97,7 +126,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Control
                                             type="tel"
                                             placeholder="Restaurant Tel"
-                                            value={restaurant.phoneNumber}
+                                            value={updateRestaurant.phoneNumber}
                                             onChange={handleChange}
                                             required
                                         />
@@ -113,7 +142,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                     <Form.Control
                                         as="textarea"
                                         placeholder="Restaurant Description"
-                                        value={restaurant.description}
+                                        value={updateRestaurant.description}
                                         onChange={handleChange}
                                         required
                                     />
@@ -127,7 +156,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                     >
                                         <Form.Label>Location</Form.Label>
                                         <Form.Select
-                                            value={restaurant.description}
+                                            value={updateRestaurant.location}
                                             onChange={handleChange}
                                         >
                                             {details.location.map(
@@ -152,7 +181,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                     >
                                         <Form.Label>Cuisine</Form.Label>
                                         <Form.Select
-                                            value={restaurant.description}
+                                            value={updateRestaurant.cuisine}
                                             onChange={handleChange}
                                         >
                                             {details.cuisine.map(
@@ -178,7 +207,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Label>Price</Form.Label>
                                         <Form.Select
                                             aria-label="Default select example"
-                                            value={restaurant.price}
+                                            value={updateRestaurant.price}
                                             onChange={handleChange}
                                         >
                                             <option value="$">$</option>
@@ -192,17 +221,117 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
 
                             <Row>
                                 <Col>
-                                    <FormGroup>
+                                    <FormGroup
+                                        className="mb-3"
+                                        controlId="openingTime"
+                                    >
                                         <Form.Label>Open Time</Form.Label>
-                                        <Form.Control
-                                            type="time"
-                                            value={restaurant.openingTime}
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            value={openTime}
                                             onChange={handleChange}
-                                            required
-                                        />
+                                        >
+                                            {intervals.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
                                     </FormGroup>
                                 </Col>
-                                <Col></Col>
+                                <Col>
+                                    <FormGroup
+                                        className="mb-3"
+                                        controlId="closingTime"
+                                    >
+                                        <Form.Label>Close Time</Form.Label>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            value={closeTime}
+                                            onChange={handleChange}
+                                        >
+                                            {intervals.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            })}
+                                        </Form.Select>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <div>Tables:</div>
+                                <Col>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="tables"
+                                    >
+                                        <Form.Label>Two Person</Form.Label>
+                                        <Form.Control
+                                            as="input"
+                                            value={
+                                                tables
+                                                    ? tables.twoPersonTables
+                                                    : 0
+                                            }
+                                            type="number"
+                                            onChange={handleChange}
+                                            min="0"
+                                            name="twoPersonTables"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="tables"
+                                    >
+                                        <Form.Label>Four Person</Form.Label>
+                                        <Form.Control
+                                            as="input"
+                                            value={
+                                                tables
+                                                    ? tables.fourPersonTables
+                                                    : 0
+                                            }
+                                            type="number"
+                                            onChange={handleChange}
+                                            min="0"
+                                            name="fourPersonTables"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="tables"
+                                    >
+                                        <Form.Label>Eight Person</Form.Label>
+                                        <Form.Control
+                                            as="input"
+                                            value={
+                                                tables
+                                                    ? tables.eightPersonTables
+                                                    : 0
+                                            }
+                                            type="number"
+                                            onChange={handleChange}
+                                            min="0"
+                                            name="eightPersonTables"
+                                        />
+                                    </Form.Group>
+                                </Col>
                             </Row>
                         </Container>
                     </Form>
@@ -223,4 +352,15 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
             </Modal>
         </div>
     );
+}
+
+function Time(stringTime) {
+    let date = new Date(`June 24, 2022 ${stringTime}`);
+    let options = {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+    };
+    let timeString = date.toLocaleString("en-US", options);
+    return timeString;
 }

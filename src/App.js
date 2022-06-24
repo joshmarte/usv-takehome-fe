@@ -9,6 +9,7 @@ import ViewRestaurants from "./Pages/ViewRestaurants";
 import SingleDetail from "./Pages/SingleDetail";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
+import CreateRestaurant from "./Components/CreateRestaurant";
 
 function App() {
     return (
@@ -19,6 +20,10 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/restaurants" element={<ViewRestaurants />} />
                     <Route path="/restaurants/:id" element={<SingleDetail />} />
+                    <Route
+                        path="/newRestaurant"
+                        element={<CreateRestaurant />}
+                    />
                 </Routes>
             </div>
             <Footer />

@@ -34,7 +34,7 @@ export default function Home() {
                         marginTop: "90px",
                     }}
                 >
-                    <Card.Title as="h1">
+                    <Card.Title as="h1" style={{ fontStyle: "italic" }}>
                         Reservations at the palm of your hand
                     </Card.Title>
                     <Card.Text>
