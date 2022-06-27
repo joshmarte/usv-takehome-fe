@@ -5,7 +5,7 @@
  */
 
 //DEPENDENCIES
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -13,35 +13,51 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import FormGroup from "react-bootstrap/FormGroup";
+import ThanyouModal from "./ThankyouModal.js";
+//FUNCTIONS
 import { details } from "../../util/cusineandlocation.js";
-import { FormGroup } from "react-bootstrap";
 import interval from "../../util/timeInterval.js";
 
 const API = process.env.REACT_APP_API_URL;
 
 export default function UpdateRestaurant({ handleClose, show, restaurant }) {
+    // THANK YOU MODAL
+    const [thankyouShow, setThankyouShow] = useState(false);
+
     // PARAMS
     let { id } = useParams();
 
+    // NAVIGATE
+    let navigate = useNavigate();
+
     // STATE FOR UPDATES
-    const [updateRestaurant, setUpdateRestaurant] = useState({});
+    const [updateRestaurant, setUpdateRestaurant] = useState(restaurant);
 
     // STATE FOR INTERVAL
-    const [intervals, setInterval] = useState(interval("00:00:00", "24:00:00"));
-    const [openTime, setOpenTime] = useState();
-    const [closeTime, setCloseTime] = useState();
-    const [tables, setTables] = useState({
-        twoPersonTables: 0,
-        fourPersonTables: 0,
-        eightPersonTables: 0,
-    });
+    const [intervals, setInterval] = useState(
+        interval("00:00:00", "24:00:00", false)
+    );
 
-    //
+    // GET AND FORMAT RESTURANT DATA FOR FORM
     useEffect(() => {
         setUpdateRestaurant(restaurant);
-        setOpenTime(Time(restaurant.openingTime));
-        setCloseTime(Time(restaurant.closingTime));
-        setTables(restaurant.tables);
+    }, [restaurant]);
+
+    useEffect(() => {
+        let open = standardTime(restaurant.openingTime, true);
+        setUpdateRestaurant((updateRestaurant) => ({
+            ...updateRestaurant,
+            ["openingTime"]: open,
+        }));
+    }, [restaurant]);
+
+    useEffect(() => {
+        let close = standardTime(restaurant.closingTime, true);
+        setUpdateRestaurant((updateRestaurant) => ({
+            ...updateRestaurant,
+            ["closingTime"]: close,
+        }));
     }, [restaurant]);
 
     // HANDLE CHANGE...NESTED?
@@ -49,7 +65,10 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
         if (event.target.id === "tables") {
             setUpdateRestaurant({
                 ...updateRestaurant,
-                [event.target.id]: event.target.value,
+                ["tables"]: {
+                    ...updateRestaurant.tables,
+                    [event.target.name]: +event.target.value,
+                },
             });
         } else {
             setUpdateRestaurant({
@@ -57,21 +76,29 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                 [event.target.id]: event.target.value,
             });
         }
-        console.log(updateRestaurant, event.target.value);
     };
 
     // HANDLE SUBMIT
     const handleSubmit = (event) => {
         event.preventDefault();
+        const objDifference = difference(restaurant, updateRestaurant);
+
+        const postRequestSuccess = HandleUpdate(objDifference);
+
+        if (postRequestSuccess) {
+            handleClose();
+            setThankyouShow(true);
+            navigate("/");
+        }
     };
 
     // HANDLE UPDATE
-    const HandleUpdate = () => {
+    const HandleUpdate = (data) => {
         async function updateData() {
             let myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({});
+            var raw = JSON.stringify(data);
 
             let requestOptions = {
                 method: "PATCH",
@@ -80,8 +107,9 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                 redirect: "follow",
             };
 
-            fetch(`${API}/reservations/${id}`, requestOptions);
+            fetch(`${API}/restaurants/${id}`, requestOptions);
         }
+        updateData();
     };
 
     return (
@@ -99,7 +127,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                     <Modal.Title>{`Update ${restaurant.name}`}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body autoFocus>
-                    <Form onSubmit={handleSubmit}>
+                    <Form validated>
                         <Container>
                             <Row>
                                 <Col>
@@ -111,7 +139,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Control
                                             type="text"
                                             placeholder="Restaurant Name"
-                                            value={restaurant.name}
+                                            value={updateRestaurant.name}
                                             onChange={handleChange}
                                             disabled
                                         />
@@ -129,7 +157,14 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                             value={updateRestaurant.phoneNumber}
                                             onChange={handleChange}
                                             required
+                                            minLength="10"
+                                            maxLength="10"
+                                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Ten digits no space, dashes or
+                                            parenthesis, (ex: 1234567890){" "}
+                                        </Form.Control.Feedback>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -228,7 +263,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Label>Open Time</Form.Label>
                                         <Form.Select
                                             aria-label="Default select example"
-                                            value={openTime}
+                                            value={updateRestaurant.openingTime}
                                             onChange={handleChange}
                                         >
                                             {intervals.map((item, index) => {
@@ -252,7 +287,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Label>Close Time</Form.Label>
                                         <Form.Select
                                             aria-label="Default select example"
-                                            value={closeTime}
+                                            value={updateRestaurant.closingTime}
                                             onChange={handleChange}
                                         >
                                             {intervals.map((item, index) => {
@@ -281,8 +316,11 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Control
                                             as="input"
                                             value={
-                                                tables
-                                                    ? tables.twoPersonTables
+                                                updateRestaurant.tables &&
+                                                updateRestaurant.tables
+                                                    .twoPersonTables
+                                                    ? updateRestaurant.tables
+                                                          .twoPersonTables
                                                     : 0
                                             }
                                             type="number"
@@ -301,8 +339,11 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Control
                                             as="input"
                                             value={
-                                                tables
-                                                    ? tables.fourPersonTables
+                                                updateRestaurant.tables &&
+                                                updateRestaurant.tables
+                                                    .fourPersonTables
+                                                    ? updateRestaurant.tables
+                                                          .fourPersonTables
                                                     : 0
                                             }
                                             type="number"
@@ -321,8 +362,11 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                         <Form.Control
                                             as="input"
                                             value={
-                                                tables
-                                                    ? tables.eightPersonTables
+                                                updateRestaurant.tables &&
+                                                updateRestaurant.tables
+                                                    .eightPersonTables
+                                                    ? updateRestaurant.tables
+                                                          .eightPersonTables
                                                     : 0
                                             }
                                             type="number"
@@ -345,22 +389,83 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                             backgroundColor: "orange",
                             border: "2px solid orange",
                         }}
+                        type="submit"
+                        onClick={handleSubmit}
                     >
                         Update
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <ThanyouModal
+                name={restaurant.name}
+                thankyouShow={thankyouShow}
+                setThankyouShow={setThankyouShow}
+            />
         </div>
     );
 }
 
-function Time(stringTime) {
+/**
+ * handles converting between 12 and 24 hours formats
+ * @param {string} stringTime - string for time
+ * @param {boolean} format - control the hour format true for  and flase for military
+ */
+function standardTime(stringTime, format) {
     let date = new Date(`June 24, 2022 ${stringTime}`);
     let options = {
         hour: "numeric",
         minute: "numeric",
-        hour12: true,
+        hour12: format,
     };
     let timeString = date.toLocaleString("en-US", options);
     return timeString;
 }
+
+/**
+ * handles converting between standard and military time
+ * @param {string} stringTime - string for time
+ */
+function militaryTime(stringTime) {
+    let date = new Date(`June 24, 2022 ${stringTime}`);
+    let options = {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+    };
+    let timeString = date.toLocaleString("en-GB", options);
+    return timeString;
+}
+
+/**
+ * handles returing the difference in value between two objects
+ * @param {object} obj1 - object one
+ * @param {object} obj2 - object two
+
+ */
+const difference = (obj1, obj2) => {
+    let answer = {};
+    let keyFound = [];
+    Object.keys(obj1).forEach((key) => {
+        if (key === "openingTime" || key === "closingTime") {
+            if (obj1[key] !== militaryTime(obj2[key])) {
+                return keyFound.push(key);
+            }
+        } else {
+            if (obj1[key] !== obj2[key]) {
+                return keyFound.push(key);
+            }
+        }
+    });
+
+    if (keyFound.length > 0) {
+        for (let item of keyFound) {
+            if (item === "openingTime" || item === "closingTime") {
+                answer[item] = militaryTime(obj2[item]);
+            } else {
+                answer[item] = obj2[item];
+            }
+        }
+    }
+    return answer;
+};

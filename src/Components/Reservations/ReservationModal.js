@@ -14,6 +14,7 @@ import ThanyouModal from "./ThankyouModal.js";
 // UTIL
 import interval from "../../util/timeInterval.js";
 import setTimeforAPI from "../../util/setTimeforAPI.js";
+
 const API = process.env.REACT_APP_API_URL;
 
 export default function CreateReservation({ restaurant }) {
@@ -96,8 +97,10 @@ export default function CreateReservation({ restaurant }) {
 
     // USING UTIL FUNCTION TO GET TIME SLOTS FROM OPEN TO CLOSE TIMES
     useEffect(() => {
-        setTimes(interval(restaurant.openingTime, restaurant.closingTime));
-    }, [show]);
+        setTimes(
+            interval(restaurant.openingTime, restaurant.closingTime, true)
+        );
+    }, [restaurant.openingTime, restaurant.closingTime]);
 
     //
     useEffect(() => {
@@ -177,6 +180,9 @@ export default function CreateReservation({ restaurant }) {
                                             value={reservation.phoneNumber}
                                             onChange={handleChange}
                                             required
+                                            minLength="10"
+                                            maxLength="10"
+                                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                                         />
                                     </Form.Group>
                                 </Col>

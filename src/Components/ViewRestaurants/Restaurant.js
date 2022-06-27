@@ -27,7 +27,7 @@ export default function Restaurant({ data }) {
                     borderRadius: "10px",
                 }}
             />
-            <Card style={{ maxWidth: "700px" }}>
+            <Card style={{ maxWidth: "700px", minWidth: "50vw" }}>
                 <Card.Body>
                     <Card.Title>
                         {`${data.name} | `}

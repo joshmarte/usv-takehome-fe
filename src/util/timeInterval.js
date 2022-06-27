@@ -1,4 +1,11 @@
-export default function interval(start, stop) {
+/**
+ *
+ * @param {string} start - start time
+ * @param {string} stop - stop time
+ * @param {boolean} restriction - handles wether or not to bound interval to current time or not
+ * @returns
+ */
+export default function interval(start, stop, restriction) {
     if (start && stop) {
         let timeInterval = [];
         let today = new Date();
@@ -21,7 +28,17 @@ export default function interval(start, stop) {
 
         while (open < close) {
             open.setMinutes(open.getMinutes() + step);
-            if (today < close && today < open) {
+            if (restriction) {
+                if (today < close && today < open) {
+                    let value = open.toLocaleTimeString("en-US", {
+                        timeZone: "EST",
+                        hour12: true,
+                        hour: "numeric",
+                        minute: "numeric",
+                    });
+                    timeInterval.push(value);
+                }
+            } else {
                 let value = open.toLocaleTimeString("en-US", {
                     timeZone: "EST",
                     hour12: true,

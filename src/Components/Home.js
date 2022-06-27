@@ -2,6 +2,7 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Home() {
     //NAVIGATE
@@ -11,6 +12,12 @@ export default function Home() {
     const handleClick = () => {
         navigate("./restaurants");
     };
+
+    //
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div
             className="home-container"
