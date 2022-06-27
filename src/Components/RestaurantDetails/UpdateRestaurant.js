@@ -18,6 +18,7 @@ import ThanyouModal from "./ThankyouModal.js";
 //FUNCTIONS
 import { details } from "../../util/cusineandlocation.js";
 import interval from "../../util/timeInterval.js";
+import militaryTime from "../../util/military.js";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -81,8 +82,8 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
     // HANDLE SUBMIT
     const handleSubmit = (event) => {
         event.preventDefault();
-        const objDifference = difference(restaurant, updateRestaurant);
 
+        const objDifference = difference(restaurant, updateRestaurant);
         const postRequestSuccess = HandleUpdate(objDifference);
 
         if (postRequestSuccess) {
@@ -418,22 +419,6 @@ function standardTime(stringTime, format) {
         hour12: format,
     };
     let timeString = date.toLocaleString("en-US", options);
-    return timeString;
-}
-
-/**
- * handles converting between standard and military time
- * @param {string} stringTime - string for time
- */
-function militaryTime(stringTime) {
-    let date = new Date(`June 24, 2022 ${stringTime}`);
-    let options = {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: false,
-    };
-    let timeString = date.toLocaleString("en-GB", options);
     return timeString;
 }
 

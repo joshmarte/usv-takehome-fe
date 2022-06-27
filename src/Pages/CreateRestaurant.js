@@ -1,19 +1,114 @@
 // DEPENDENCIES
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import FormGroup from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+
+//FUNCTIONS
+import { details } from "../util/cusineandlocation.js";
+import interval from "../util/timeInterval.js";
+import militaryTime from "../util/military.js";
+
 const API = process.env.REACT_APP_API_URL;
 
 export default function CreateRestaurant() {
-    // POST CALL
-    const handleSubmit = () => {};
+    // NAVIGATE
+    let navigate = useNavigate();
 
+    // FORM STATE
+    const [newRestaurant, setNewRestaurant] = useState({
+        name: "",
+        description: "",
+        phoneNumber: "",
+        openingTime: "12:00 PM",
+        closingTime: "10:30 PM",
+        price: "",
+        cuisine: "",
+        location: "",
+        diningRestriction: "Delivery Only",
+        tables: {
+            twoPersonTables: 0,
+            fourPersonTables: 0,
+            eightPersonTables: 0,
+        },
+    });
+    // STATE FOR INTERVAL
+    const [intervals, setInterval] = useState(
+        interval("00:00:00", "24:00:00", false)
+    );
+
+    // HANDLE CHANGE...NESTED?
+    const handleChange = (event) => {
+        if (event.target.id === "tables") {
+            setNewRestaurant({
+                ...newRestaurant,
+                ["tables"]: {
+                    ...newRestaurant.tables,
+                    [event.target.name]: +event.target.value,
+                },
+            });
+        } else {
+            setNewRestaurant({
+                ...newRestaurant,
+                [event.target.id]: event.target.value,
+            });
+        }
+    };
+
+    // POST CALL
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        let open = militaryTime(newRestaurant.openingTime);
+        let close = militaryTime(newRestaurant.closingTime);
+
+        setNewRestaurant((newRestaurant) => ({
+            ...newRestaurant,
+            ["openingTime"]: open,
+        }));
+        setNewRestaurant((newRestaurant) => ({
+            ...newRestaurant,
+            ["closingTime"]: close,
+        }));
+
+        async function createRestaurant() {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            console.log(newRestaurant);
+
+            var raw = JSON.stringify(newRestaurant);
+
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow",
+            };
+
+            let postRestaurant = await fetch(
+                `${API}/restaurants`,
+                requestOptions
+            );
+            let postData = await postRestaurant.json();
+        }
+        createRestaurant();
+        navigate("/");
+    };
     return (
-        <div className="createRestaurant-container">
-            {/* <Form onSubmit={handleSubmit}>
+        <div
+            className="createRestaurant-container"
+            style={{
+                width: "60vw",
+                margin: "100px auto",
+            }}
+        >
+            <h3 style={{ paddingLeft: "10px" }}>Create a Restaurant Form:</h3>
+            <br></br>
+            <Form validated onSubmit={handleSubmit}>
                 <Container>
                     <Row>
                         <Col>
@@ -22,9 +117,9 @@ export default function CreateRestaurant() {
                                 <Form.Control
                                     type="text"
                                     placeholder="Restaurant Name"
-                                    value={restaurant.name}
+                                    value={newRestaurant.name}
                                     onChange={handleChange}
-                                    disabled
+                                    required
                                 />
                             </Form.Group>
                         </Col>
@@ -37,10 +132,17 @@ export default function CreateRestaurant() {
                                 <Form.Control
                                     type="tel"
                                     placeholder="Restaurant Tel"
-                                    value={restaurant.phoneNumber}
+                                    value={newRestaurant.phoneNumber}
                                     onChange={handleChange}
                                     required
+                                    minLength="10"
+                                    maxLength="10"
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Ten digits no space, dashes or parenthesis,
+                                    (ex: 1234567890){" "}
+                                </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -50,7 +152,7 @@ export default function CreateRestaurant() {
                             <Form.Control
                                 as="textarea"
                                 placeholder="Restaurant Description"
-                                value={restaurant.description}
+                                value={newRestaurant.description}
                                 onChange={handleChange}
                                 required
                             />
@@ -61,8 +163,9 @@ export default function CreateRestaurant() {
                             <Form.Group className="mb-3" controlId="location">
                                 <Form.Label>Location</Form.Label>
                                 <Form.Select
-                                    value={restaurant.description}
+                                    value={newRestaurant.location}
                                     onChange={handleChange}
+                                    required
                                 >
                                     {details.location.map((index, item) => {
                                         return (
@@ -78,7 +181,7 @@ export default function CreateRestaurant() {
                             <Form.Group className="mb-3" controlId="cuisine">
                                 <Form.Label>Cuisine</Form.Label>
                                 <Form.Select
-                                    value={restaurant.description}
+                                    value={newRestaurant.cuisine}
                                     onChange={handleChange}
                                 >
                                     {details.cuisine.map((index, item) => {
@@ -96,7 +199,7 @@ export default function CreateRestaurant() {
                                 <Form.Label>Price</Form.Label>
                                 <Form.Select
                                     aria-label="Default select example"
-                                    value={restaurant.price}
+                                    value={newRestaurant.price}
                                     onChange={handleChange}
                                 >
                                     <option value="$">$</option>
@@ -114,7 +217,7 @@ export default function CreateRestaurant() {
                                 <Form.Label>Open Time</Form.Label>
                                 <Form.Select
                                     aria-label="Default select example"
-                                    value={openTime}
+                                    value={newRestaurant.openingTime}
                                     onChange={handleChange}
                                 >
                                     {intervals.map((item, index) => {
@@ -132,7 +235,7 @@ export default function CreateRestaurant() {
                                 <Form.Label>Close Time</Form.Label>
                                 <Form.Select
                                     aria-label="Default select example"
-                                    value={closeTime}
+                                    value={newRestaurant.closingTime}
                                     onChange={handleChange}
                                 >
                                     {intervals.map((item, index) => {
@@ -145,16 +248,45 @@ export default function CreateRestaurant() {
                                 </Form.Select>
                             </FormGroup>
                         </Col>
+                        <Col>
+                            <FormGroup
+                                className="mb-3"
+                                controlId="diningRestriction"
+                                value={newRestaurant.diningRestriction}
+                                required
+                            >
+                                <Form.Label>Dining Restriction</Form.Label>
+                                <Form.Select
+                                    aria-label="Default select example"
+                                    value={newRestaurant.diningRestriction}
+                                    onChange={handleChange}
+                                >
+                                    <option value="Delivery Only">
+                                        Delivery Only
+                                    </option>
+                                    <option value="Takeout Only">
+                                        Takeout Only
+                                    </option>
+                                </Form.Select>
+                            </FormGroup>
+                        </Col>
                     </Row>
 
                     <Row>
                         <div>Tables:</div>
+
                         <Col>
                             <Form.Group className="mb-3" controlId="tables">
                                 <Form.Label>Two Person</Form.Label>
                                 <Form.Control
                                     as="input"
-                                    value={tables ? tables.twoPersonTables : 0}
+                                    value={
+                                        newRestaurant.tables &&
+                                        newRestaurant.tables.twoPersonTables
+                                            ? newRestaurant.tables
+                                                  .twoPersonTables
+                                            : 0
+                                    }
                                     type="number"
                                     onChange={handleChange}
                                     min="0"
@@ -167,7 +299,13 @@ export default function CreateRestaurant() {
                                 <Form.Label>Four Person</Form.Label>
                                 <Form.Control
                                     as="input"
-                                    value={tables ? tables.fourPersonTables : 0}
+                                    value={
+                                        newRestaurant.tables &&
+                                        newRestaurant.tables.fourPersonTables
+                                            ? newRestaurant.tables
+                                                  .fourPersonTables
+                                            : 0
+                                    }
                                     type="number"
                                     onChange={handleChange}
                                     min="0"
@@ -181,7 +319,11 @@ export default function CreateRestaurant() {
                                 <Form.Control
                                     as="input"
                                     value={
-                                        tables ? tables.eightPersonTables : 0
+                                        newRestaurant.tables &&
+                                        newRestaurant.tables.eightPersonTables
+                                            ? newRestaurant.tables
+                                                  .eightPersonTables
+                                            : 0
                                     }
                                     type="number"
                                     onChange={handleChange}
@@ -191,8 +333,15 @@ export default function CreateRestaurant() {
                             </Form.Group>
                         </Col>
                     </Row>
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        style={{ margin: "0 auto" }}
+                    >
+                        Submit
+                    </Button>
                 </Container>
-            </Form> */}
+            </Form>
         </div>
     );
 }

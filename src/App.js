@@ -9,7 +9,7 @@ import ViewRestaurants from "./Pages/ViewRestaurants";
 import SingleDetail from "./Pages/SingleDetail";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
-import CreateRestaurant from "./Components/CreateRestaurant";
+import CreateRestaurant from "./Pages/CreateRestaurant";
 
 function App() {
     return (
