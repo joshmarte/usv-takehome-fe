@@ -6,29 +6,30 @@ import Button from "react-bootstrap/Button";
 
 export default function Filters(props) {
     // CHECKBOX CHANGE
+
     const handleCheckboxChange = (event) => {
         let check = event.target.checked;
         if (check) {
             props.setUserFilters({
                 ...props.userFilters,
-                [event.target.id]: [
-                    ...props.userFilters[event.target.id],
-                    event.target.value,
+                [event.target.name]: [
+                    ...props.userFilters[event.target.name],
+                    event.target.id,
                 ],
             });
         }
         // HANDLE UNCHECKING SELECTION REMOVING ITEM FROM STATE AND API CALL
         else {
-            let index = props.userFilters[event.target.id].indexOf(
-                event.target.value
+            let index = props.userFilters[event.target.name].indexOf(
+                event.target.id
             );
-            let temp = [...props.userFilters[event.target.id]];
+            let temp = [...props.userFilters[event.target.name]];
 
             if (index > -1) {
                 temp.splice(index, 1);
                 props.setUserFilters({
                     ...props.userFilters,
-                    [event.target.id]: temp,
+                    [event.target.name]: temp,
                 });
             }
         }
@@ -54,21 +55,26 @@ export default function Filters(props) {
                     menuVariant="dark"
                     title="Select Cuisine"
                 >
-                    {props.cuisine.map((item, index) => {
-                        return (
-                            <Dropdown.ItemText key={index}>
-                                <Form>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="cuisine"
+                        onChange={handleCheckboxChange}
+                    >
+                        <Form style={{ paddingLeft: "15px" }}>
+                            {props.cuisine.map((item, index) => {
+                                return (
                                     <Form.Check
+                                        key={index}
                                         type="checkbox"
-                                        id="cuisine"
+                                        id={item}
                                         label={item}
-                                        onChange={handleCheckboxChange}
-                                        value={item}
+                                        name="cuisine"
+                                        style={{ marginBottom: "5px" }}
                                     />
-                                </Form>
-                            </Dropdown.ItemText>
-                        );
-                    })}
+                                );
+                            })}
+                        </Form>
+                    </Form.Group>
                 </DropdownButton>
             </div>
 
@@ -79,21 +85,26 @@ export default function Filters(props) {
                     menuVariant="dark"
                     title="Select Location"
                 >
-                    {props.location.map((item, index) => {
-                        return (
-                            <Dropdown.ItemText key={index}>
-                                <Form>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="location"
+                        onChange={handleCheckboxChange}
+                    >
+                        <Form style={{ paddingLeft: "15px" }}>
+                            {props.location.map((item, index) => {
+                                return (
                                     <Form.Check
+                                        key={index}
                                         type="checkbox"
-                                        id="location"
+                                        id={item}
                                         label={item}
-                                        onChange={handleCheckboxChange}
-                                        value={item}
+                                        name="location"
+                                        style={{ marginBottom: "5px" }}
                                     />
-                                </Form>
-                            </Dropdown.ItemText>
-                        );
-                    })}
+                                );
+                            })}
+                        </Form>
+                    </Form.Group>
                 </DropdownButton>
             </div>
 
@@ -104,7 +115,41 @@ export default function Filters(props) {
                     menuVariant="dark"
                     title="Select Price"
                 >
-                    <Dropdown.ItemText>
+                    <Form.Group
+                        className="mb-3"
+                        controlId="price"
+                        onChange={(event) => {
+                            console.log(event.target.value);
+                            if (event.target.checked) {
+                                props.setUserFilters({
+                                    ...props.userFilters,
+                                    [event.target.name]: [event.target.value],
+                                });
+                            } else {
+                                props.setUserFilters({
+                                    ...props.userFilters,
+                                    [event.target.value]: [],
+                                });
+                            }
+                        }}
+                    >
+                        <Form style={{ paddingLeft: "15px" }}>
+                            {props.price.map((item, index) => {
+                                return (
+                                    <Form.Check
+                                        key={index}
+                                        type="radio"
+                                        // id="price"
+                                        value={item === "Any" ? "" : item}
+                                        label={item}
+                                        name="price"
+                                        style={{ marginBottom: "5px" }}
+                                    />
+                                );
+                            })}
+                        </Form>
+                    </Form.Group>
+                    {/* <Dropdown.ItemText>
                         <Form
                             onChange={(event) => {
                                 if (event.target.value) {
@@ -133,7 +178,7 @@ export default function Filters(props) {
                                 );
                             })}
                         </Form>
-                    </Dropdown.ItemText>
+                    </Dropdown.ItemText> */}
                 </DropdownButton>
             </div>
             <div className="reset-button">

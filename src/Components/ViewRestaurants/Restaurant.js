@@ -38,6 +38,7 @@ export default function Restaurant({ data }) {
                             display: "flex",
                             gap: "5px",
                             paddingLeft: "10px",
+                            alignItems: "center",
                         }}
                     >
                         <i className="fa-solid fa-location-dot"></i>

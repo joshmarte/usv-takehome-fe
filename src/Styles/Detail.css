@@ -23,4 +23,11 @@
         flex-direction: column;
         gap: 20px;
     }
+
+    .update-tables-container {
+        flex-direction: column;
+    }
+    .update-time-container {
+        flex-direction: column;
+    }
 }

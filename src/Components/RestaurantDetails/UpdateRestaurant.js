@@ -255,7 +255,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            <Row className="update-time-container">
                                 <Col>
                                     <FormGroup
                                         className="mb-3"
@@ -306,7 +306,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            <Row className="update-tables-container">
                                 <div>Tables:</div>
                                 <Col>
                                     <Form.Group
