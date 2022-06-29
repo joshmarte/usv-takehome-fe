@@ -98,7 +98,7 @@ export default function ViewRestaurants() {
                     setUserFilters={setUserFilters}
                     setSearchTerm={setSearchTerm}
                 />
-                {restaurants.name ? (
+                {restaurants.length < 1 ? (
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>
@@ -126,7 +126,6 @@ const getParamsString = (filters) => {
     let paramString = [];
 
     for (let [key, value] of Object.entries(filters)) {
-        console.log(value.length);
         if (value[0] !== "") {
             value.forEach((item) => {
                 paramString.push(`filters[${key}]=${item}`);

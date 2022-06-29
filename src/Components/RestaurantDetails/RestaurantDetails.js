@@ -7,9 +7,10 @@ import { useState } from "react";
 //UTIL
 import dateTime from "../../util/dateTime.js";
 //COMPONENT
-import ReservationModal from "../Reservations/ReservationModal";
+import CreateReservationModal from "../Reservations/CreateReservationModal";
 import DeleteRestaurants from "./DeleteRestaurant.js";
 import UpdateRestaurant from "./UpdateRestaurant.js";
+import SingleReservation from "../../Pages/SingleReservation.js";
 
 export default function ResaurantDetails({ restaurant }) {
     // DELETE MODAL
@@ -94,8 +95,9 @@ export default function ResaurantDetails({ restaurant }) {
                         className="details-buttons"
                         style={{ display: "flex" }}
                     >
-                        <ReservationModal restaurant={restaurant} />
+                        <CreateReservationModal restaurant={restaurant} />
                     </div>
+                    <SingleReservation reservations={restaurant.reservations} />
                     <DeleteRestaurants
                         handleClose={handleDeleteClose}
                         show={deleteShow}
