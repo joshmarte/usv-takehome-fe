@@ -13,6 +13,8 @@ export default function RestaurantResModal({
     setResShow,
     dates,
     reservations,
+    setSingleResID,
+    handleUpdateShow,
 }) {
     // MODAL
     const handleResClose = () => {
@@ -59,6 +61,8 @@ export default function RestaurantResModal({
                                 item={item}
                                 key={index}
                                 handleResClose={handleResClose}
+                                setSingleResID={setSingleResID}
+                                handleUpdateShow={handleUpdateShow}
                             />
                         );
                     });
@@ -73,6 +77,8 @@ export default function RestaurantResModal({
                                     item={item}
                                     key={index}
                                     handleResClose={handleResClose}
+                                    setSingleResID={setSingleResID}
+                                    handleUpdateShow={handleUpdateShow}
                                 />
                             );
                         });
@@ -87,6 +93,8 @@ export default function RestaurantResModal({
                                     item={item}
                                     key={index}
                                     handleResClose={handleResClose}
+                                    setSingleResID={setSingleResID}
+                                    handleUpdateShow={handleUpdateShow}
                                 />
                             );
                         });

@@ -2,7 +2,12 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 
-export default function ResItems({ item }) {
+export default function ResItems({
+    item,
+    handleResClose,
+    setSingleResID,
+    handleUpdateShow,
+}) {
     // TIME FUNCTION
     let resTime = new Date(item.time);
     resTime.setHours(resTime.getHours() + 1);
@@ -13,6 +18,13 @@ export default function ResItems({ item }) {
         hour: "numeric",
         minute: "numeric",
     });
+
+    // HANDLE UPDATE CLICK
+    const handleUpdateClick = () => {
+        handleResClose();
+        handleUpdateShow();
+        setSingleResID(item);
+    };
 
     return (
         <div className="resitems-container">
@@ -43,7 +55,10 @@ export default function ResItems({ item }) {
                             bg="Warning"
                             text="dark"
                             as="button"
-                            // onClick={handleUpdateShow}
+                            onClick={handleUpdateClick}
+                            disabled={
+                                new Date(resTime) < new Date() ? true : false
+                            }
                         >
                             Update
                         </Badge>

@@ -18,7 +18,7 @@ import ThanyouModal from "./ThankyouModal.js";
 //FUNCTIONS
 import { details } from "../../util/cusineandlocation.js";
 import interval from "../../util/timeInterval.js";
-import militaryTime from "../../util/military.js";
+import difference from "../../util/difference.js";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -421,36 +421,3 @@ function standardTime(stringTime, format) {
     let timeString = date.toLocaleString("en-US", options);
     return timeString;
 }
-
-/**
- * handles returing the difference in value between two objects
- * @param {object} obj1 - object one
- * @param {object} obj2 - object two
-
- */
-const difference = (obj1, obj2) => {
-    let answer = {};
-    let keyFound = [];
-    Object.keys(obj1).forEach((key) => {
-        if (key === "openingTime" || key === "closingTime") {
-            if (obj1[key] !== militaryTime(obj2[key])) {
-                return keyFound.push(key);
-            }
-        } else {
-            if (obj1[key] !== obj2[key]) {
-                return keyFound.push(key);
-            }
-        }
-    });
-
-    if (keyFound.length > 0) {
-        for (let item of keyFound) {
-            if (item === "openingTime" || item === "closingTime") {
-                answer[item] = militaryTime(obj2[item]);
-            } else {
-                answer[item] = obj2[item];
-            }
-        }
-    }
-    return answer;
-};

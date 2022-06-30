@@ -97,7 +97,11 @@ export default function ResaurantDetails({ restaurant }) {
                     >
                         <CreateReservationModal restaurant={restaurant} />
                     </div>
-                    <SingleReservation reservations={restaurant.reservations} />
+                    <SingleReservation
+                        reservations={restaurant.reservations}
+                        open={restaurant.openingTime}
+                        close={restaurant.closingTime}
+                    />
                     <DeleteRestaurants
                         handleClose={handleDeleteClose}
                         show={deleteShow}

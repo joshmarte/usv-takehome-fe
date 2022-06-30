@@ -97,12 +97,18 @@ export default function CreateReservation({ restaurant }) {
 
     // USING UTIL FUNCTION TO GET TIME SLOTS FROM OPEN TO CLOSE TIMES
     useEffect(() => {
-        setTimes(
-            interval(restaurant.openingTime, restaurant.closingTime, true)
-        );
-    }, [restaurant.openingTime, restaurant.closingTime]);
+        if (formDateTime.date <= today) {
+            setTimes(
+                interval(restaurant.openingTime, restaurant.closingTime, true)
+            );
+        } else {
+            setTimes(
+                interval(restaurant.openingTime, restaurant.closingTime, false)
+            );
+        }
+    }, [restaurant.openingTime, restaurant.closingTime, formDateTime.date]);
 
-    //
+    //FORMAT DATE FOR PATCH FORM
     useEffect(() => {
         setReservation({
             ...reservation,
