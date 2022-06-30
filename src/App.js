@@ -5,11 +5,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // COMPONENETS
 import Navigation from "./Components/Navigation";
-import ViewRestaurants from "./Pages/ViewRestaurants";
-import SingleDetail from "./Pages/SingleDetail";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
+import ViewRestaurants from "./Pages/ViewRestaurants";
+import SingleDetail from "./Pages/SingleDetail";
 import CreateRestaurant from "./Pages/CreateRestaurant";
+import AllReservations from "./Pages/AllReservations";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         path="/newRestaurant"
                         element={<CreateRestaurant />}
                     />
+                    <Route path="/reservations" element={<AllReservations />} />
                 </Routes>
             </div>
             <Footer />
