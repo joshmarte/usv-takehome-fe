@@ -15,6 +15,7 @@ export default function ViewRestaurants() {
 
     //API DATA TO DISPLAY
     const [restaurants, setRestaurants] = useState([]);
+    const [receivedData, setReceivedData] = useState(false);
 
     // FORM DATA TO DISPLAY FROM API
     const [cuisine, setCuisine] = useState([]);
@@ -71,6 +72,7 @@ export default function ViewRestaurants() {
                 let apiData = await response.json();
 
                 setRestaurants(apiData.restaurants);
+                setReceivedData(true);
             }
             fetchDataResuturants();
         } catch (error) {
@@ -98,7 +100,7 @@ export default function ViewRestaurants() {
                     setUserFilters={setUserFilters}
                     setSearchTerm={setSearchTerm}
                 />
-                {restaurants.length < 1 ? (
+                {!receivedData ? (
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>
