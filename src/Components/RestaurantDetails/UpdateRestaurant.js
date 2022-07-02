@@ -1,11 +1,5 @@
-/**
- * handling nested object
- * handling patch
- * handling time for patch
- */
-
 //DEPENDENCIES
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -14,7 +8,10 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import FormGroup from "react-bootstrap/FormGroup";
+
+// COMPONENTS
 import ThanyouModal from "./ThankyouModal.js";
+
 //FUNCTIONS
 import { details } from "../../util/cusineandlocation.js";
 import interval from "../../util/timeInterval.js";
@@ -28,9 +25,6 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
 
     // PARAMS
     let { id } = useParams();
-
-    // NAVIGATE
-    let navigate = useNavigate();
 
     // STATE FOR UPDATES
     const [updateRestaurant, setUpdateRestaurant] = useState(restaurant);
@@ -86,11 +80,8 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
         const objDifference = difference(restaurant, updateRestaurant);
         const postRequestSuccess = HandleUpdate(objDifference);
 
-        if (postRequestSuccess) {
-            handleClose();
-            setThankyouShow(true);
-            navigate("/");
-        }
+        handleClose();
+        setThankyouShow(true);
     };
 
     // HANDLE UPDATE

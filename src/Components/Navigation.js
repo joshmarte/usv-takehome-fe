@@ -34,6 +34,9 @@ export default function Navigation() {
                             <Nav.Link href="/reservations">
                                 Reservations
                             </Nav.Link>
+                            <Nav.Link href="/newRestaurant">
+                                Create a Restaurant
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -1,5 +1,5 @@
 // DEPENDENCIES
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -8,13 +8,14 @@ export default function ThanyouModal({
     setThankyouShow,
     reservation,
 }) {
+    const { id } = useParams();
     // NAVIGATE
     let navigate = useNavigate();
 
     // MODAL
     const handleClose = () => {
         setThankyouShow(false);
-        navigate("/restaurants");
+        navigate(`/restaurants/${id}`);
     };
 
     return (

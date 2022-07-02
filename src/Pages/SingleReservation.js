@@ -23,7 +23,7 @@ export default function SingleReservation({ reservations, open, close }) {
     //GET ALL RESERVATION DATES
     useEffect(() => {
         if (!!reservations) {
-            if (!reservations[0] === null) {
+            if (reservations[0]) {
                 let times = reservations.map((items) => {
                     return new Date(items.time).toLocaleDateString("en-US");
                 });

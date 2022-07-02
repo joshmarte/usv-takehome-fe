@@ -1,6 +1,7 @@
 // DEPENDENCIES
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import Spinner from "react-bootstrap/Spinner";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -41,40 +42,46 @@ export default function AllReservations() {
 
     return (
         <div className="allrestaurants-container" style={{ margin: "100px" }}>
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone Number</th>
-                        <th>Email</th>
-                        <th>Time</th>
-                        <th>Number of Guests</th>
-                        <th>Restaurant</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reservations.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{item.firstName}</td>
-                                <td>{item.lastName}</td>
-                                <td>{item.phoneNumber}</td>
-                                <td>{item.email}</td>
-                                <td>{formatTime(item.time)}</td>
-                                <td>{item.numGuests}</td>
-                                <td>
-                                    {dataRecieved
-                                        ? ressyNames[item.restaurantId]
-                                        : ""}
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </Table>
+            {dataRecieved ? (
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Time</th>
+                            <th>Number of Guests</th>
+                            <th>Restaurant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reservations.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.firstName}</td>
+                                    <td>{item.lastName}</td>
+                                    <td>{item.phoneNumber}</td>
+                                    <td>{item.email}</td>
+                                    <td>{formatTime(item.time)}</td>
+                                    <td>{item.numGuests}</td>
+                                    <td>
+                                        {dataRecieved
+                                            ? ressyNames[item.restaurantId]
+                                            : ""}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
+            ) : (
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            )}
         </div>
     );
 }
