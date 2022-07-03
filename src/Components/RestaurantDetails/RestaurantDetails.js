@@ -6,7 +6,7 @@ import { useState } from "react";
 
 //UTIL
 import dateTime from "../../util/dateTime.js";
-//COMPONENT
+//COMPONENTS
 import CreateReservationModal from "../Reservations/CreateReservationModal";
 import DeleteRestaurants from "./DeleteRestaurant.js";
 import UpdateRestaurant from "./UpdateRestaurant.js";

@@ -25,6 +25,7 @@ export default function CreateReservation({ restaurant }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     // THANK YOU MODAL
     const [thankyouShow, setThankyouShow] = useState(false);
 

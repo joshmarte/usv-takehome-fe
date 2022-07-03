@@ -1,9 +1,9 @@
 // DEPENDENCIES
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useState } from "react";
 
 // COMPONENTS
 import ResItems from "./ResItems";

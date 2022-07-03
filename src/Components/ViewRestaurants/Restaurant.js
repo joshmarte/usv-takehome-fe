@@ -11,6 +11,7 @@ import dateTime from "../../util/dateTime.js";
 
 export default function Restaurant({ data }) {
     let navigate = useNavigate();
+
     // HANDLE VIEW RESERVATIONS
     const handleClick = (event, id) => {
         navigate(`./${id}`);

@@ -313,6 +313,11 @@ export default function UpdateReservation({
     );
 }
 
+/**
+ *
+ * @param {String} stringTime - DB formated String representing day and time (24hrs)
+ * @returns {String} - formatted Date and Time
+ */
 function standardTime(stringTime) {
     let date = new Date(stringTime);
     let obj = {};

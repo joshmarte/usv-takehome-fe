@@ -1,7 +1,7 @@
 // DEPENDENCIES
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useNavigate, useParams } from "react-router-dom";
 const API = process.env.REACT_APP_API_URL;
 
 export default function DeleteRestaurants({ handleClose, show, name }) {

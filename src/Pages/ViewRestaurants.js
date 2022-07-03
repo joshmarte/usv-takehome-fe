@@ -11,18 +11,16 @@ import "../Styles/View.css";
 const API = process.env.REACT_APP_API_URL;
 
 export default function ViewRestaurants() {
-    // STATE VARIABLES
-
-    //API DATA TO DISPLAY
+    // STATE VARIABLES FOR GETTING API DATA WITH CORRESPONDING BOOLEAN FLAG
     const [restaurants, setRestaurants] = useState([]);
     const [receivedData, setReceivedData] = useState(false);
 
-    // FORM DATA TO DISPLAY FROM API
+    // FILTER DATA TO DISPLAY ~ FROM API
     const [cuisine, setCuisine] = useState([]);
     const [location, setLocation] = useState([]);
     const [price, setPrice] = useState(["$", "$$", "$$$", "$$$$", "Any"]);
 
-    // USER SELECTIONS: SEARCH & FILTERS TERMS
+    // USER SELECTIONS: SEARCH & FILTERS TERMS FROM USER
     const [searchTerm, setSearchTerm] = useState("");
     const [userFilters, setUserFilters] = useState({
         location: [],
@@ -72,8 +70,10 @@ export default function ViewRestaurants() {
                 let apiData = await response.json();
 
                 setRestaurants(apiData.restaurants);
+
                 setReceivedData(true);
             }
+
             fetchDataResuturants();
         } catch (error) {
             console.log(error);
@@ -113,6 +113,12 @@ export default function ViewRestaurants() {
 }
 
 // HELPER FUNCTION TO GET UNIQUE KEYS FROM API DATA
+/**
+ *
+ * @param {Object} data - represents each Restaurant item
+ * @param {String} key - represents key we want to extract values from
+ * @returns {Array} - Distinict values
+ */
 const getUniqueKeyValues = (data, key) => {
     let all = data.map((item) => {
         return item[key];
@@ -124,6 +130,11 @@ const getUniqueKeyValues = (data, key) => {
 };
 
 // HELPER FUNCTION TO SET UP QUERY PARAMS (WASNT NOT ABLE TO GET PARAMS FILTER WORKING AS AN OBJECT...)
+/**
+ *
+ * @param {Object} filters - Object containing keys representing the filter dropdown corresponding to the metadata for each Restaurant, and the value an array with the selected user dropdown values.
+ * @returns {String} - formated as a query param
+ */
 const getParamsString = (filters) => {
     let paramString = [];
 

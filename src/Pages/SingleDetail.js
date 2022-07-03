@@ -1,7 +1,6 @@
 // DEPENDENCIES
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 //STYLE
 import "../Styles/Detail.css";
 //COMPONENTS
@@ -10,8 +9,10 @@ import ResaurantDetails from "../Components/RestaurantDetails/RestaurantDetails"
 const API = process.env.REACT_APP_API_URL;
 
 export default function SingleDetail() {
-    // STATE AND PARAMAS
+    // PARAMAS
     let { id } = useParams();
+
+    // STATE FOR INDIVIDUAL RESTAURANT
     const [restaurant, setRestaurant] = useState({});
 
     // FETCH SPECIFIC RESTAURANT DATA
