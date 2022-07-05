@@ -36,7 +36,7 @@ export default function RestaurantResModal({
             return dates
                 .filter((item, index) => {
                     // ONLY SHOW DATES AFTER TODAY
-                    return item >= today;
+                    return new Date(item) >= new Date(today);
                 })
                 .map((item, index) => {
                     return (
@@ -69,7 +69,9 @@ export default function RestaurantResModal({
                 } else if (selectedDates === "Historical") {
                     return reservations
                         .filter((item) => {
-                            return resTimes(item.time) < today;
+                            return (
+                                new Date(resTimes(item.time)) < new Date(today)
+                            );
                         })
                         .map((item, index) => {
                             return (
@@ -120,7 +122,12 @@ export default function RestaurantResModal({
                         Select Date
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>{handleFillDropDown()}</Dropdown.Menu>
+                    <Dropdown.Menu>
+                        {handleFillDropDown()}
+                        <Dropdown.Item eventKey="Historical">
+                            Historical
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
                 </Dropdown>
                 <Modal.Body>
                     <ListGroup as="ol" numbered>

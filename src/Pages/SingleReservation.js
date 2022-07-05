@@ -27,7 +27,6 @@ export default function SingleReservation({ reservations, open, close }) {
                 let times = reservations.map((items) => {
                     return new Date(items.time).toLocaleDateString("en-US");
                 });
-                times.push("Historical");
                 setDates(times);
             }
         }
