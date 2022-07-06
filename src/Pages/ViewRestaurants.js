@@ -107,6 +107,11 @@ export default function ViewRestaurants() {
                 ) : (
                     <Restaurants restaurants={restaurants} />
                 )}
+                {receivedData && restaurants < 1 ? (
+                    <h3>No Applicable Restaurants</h3>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );

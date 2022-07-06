@@ -6,9 +6,10 @@ import Spinner from "react-bootstrap/Spinner";
 const API = process.env.REACT_APP_API_URL;
 
 export default function AllReservations() {
+    // STATE FOR RESERVATION DATA / FETCH COMPLETED / RESTUARNT NAME
     const [reservations, setReservations] = useState([]);
-    const [ressyNames, setRessyNames] = useState({});
     const [dataRecieved, setDataRecieved] = useState(false);
+    const [restaurantName, setRestaurantName] = useState({});
 
     // GET API RESERVATION DATA
     useEffect(() => {
@@ -32,10 +33,10 @@ export default function AllReservations() {
 
         if (dataRecieved) {
             reservations.map(async (item) => {
-                ressyNames[item.restaurantId] = await restaurantName(
+                restaurantName[item.restaurantId] = await restaurantName(
                     item.restaurantId
                 );
-                setRessyNames({ ...ressyNames });
+                setRestaurantName({ ...restaurantName });
             });
         }
     }, [dataRecieved]);
@@ -69,7 +70,7 @@ export default function AllReservations() {
                                     <td>{item.numGuests}</td>
                                     <td>
                                         {dataRecieved
-                                            ? ressyNames[item.restaurantId]
+                                            ? restaurantName[item.restaurantId]
                                             : ""}
                                     </td>
                                 </tr>
@@ -86,6 +87,11 @@ export default function AllReservations() {
     );
 }
 
+/**
+ * RETURNS A READABLE DAY AND TIME STRING
+ * @param {string} timeString - day and time formated from DB
+ * @returns {string}
+ */
 function formatTime(timeString) {
     const date = new Date(timeString);
     return (

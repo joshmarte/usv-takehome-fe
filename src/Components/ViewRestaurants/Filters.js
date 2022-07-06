@@ -38,6 +38,23 @@ export default function Filters(props) {
         }
     };
 
+    // HANDLE RADIO
+    const handleRadio = (event) => {
+        console.log(event.target);
+        setRadioValue(event.target.value === "" ? "Any" : event.target.value);
+        if (event.target.checked) {
+            props.setUserFilters({
+                ...props.userFilters,
+                [event.target.name]: [event.target.value],
+            });
+        } else {
+            props.setUserFilters({
+                ...props.userFilters,
+                [event.target.value]: [],
+            });
+        }
+    };
+
     // HANDLE RESETING ALL FILTERS
     const handleReset = (event) => {
         event.preventDefault();
@@ -119,23 +136,7 @@ export default function Filters(props) {
                     menuVariant="dark"
                     title="Select Price"
                 >
-                    <Form.Group
-                        className="mb-3"
-                        controlId="price"
-                        onChange={(event) => {
-                            if (event.target.checked) {
-                                props.setUserFilters({
-                                    ...props.userFilters,
-                                    [event.target.name]: [event.target.value],
-                                });
-                            } else {
-                                props.setUserFilters({
-                                    ...props.userFilters,
-                                    [event.target.value]: [],
-                                });
-                            }
-                        }}
-                    >
+                    <Form.Group className="mb-3" controlId="price">
                         <Form style={{ paddingLeft: "15px" }}>
                             {props.price.map((item, index) => {
                                 return (
@@ -145,11 +146,10 @@ export default function Filters(props) {
                                         value={item === "Any" ? "" : item}
                                         label={item}
                                         name="price"
+                                        id={item}
                                         style={{ marginBottom: "5px" }}
                                         checked={radioValue === item}
-                                        onChange={(event) => {
-                                            setRadioValue(event.target.value);
-                                        }}
+                                        onChange={handleRadio}
                                     />
                                 );
                             })}

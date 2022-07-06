@@ -36,7 +36,8 @@ export default function CreateRestaurant() {
             eightPersonTables: 0,
         },
     });
-    // STATE FOR INTERVAL
+
+    // STATE FOR TIME INTERVAL DROPDOWN
     const [intervals, setInterval] = useState(
         interval("00:00:00", "24:00:00", false)
     );
@@ -98,6 +99,7 @@ export default function CreateRestaurant() {
         createRestaurant();
         navigate("/");
     };
+
     return (
         <div
             className="createRestaurant-container"

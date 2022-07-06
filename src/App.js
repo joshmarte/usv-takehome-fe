@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router-dom";
 // STYLES
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// COMPONENETS
+// SHARED COMPONENETS
 import Navigation from "./Components/Navigation";
 import Footer from "./Components/Footer";
 import Home from "./Components/Home";
+// PAGES COMPONENTS
 import ViewRestaurants from "./Pages/ViewRestaurants";
 import SingleDetail from "./Pages/SingleDetail";
 import CreateRestaurant from "./Pages/CreateRestaurant";
