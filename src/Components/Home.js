@@ -19,13 +19,7 @@ export default function Home() {
     }, []);
 
     return (
-        <div
-            className="home-container"
-            style={{
-                marginTop: "55px",
-                height: "100vh",
-            }}
-        >
+        <div className="home-container">
             <Card className="bg-dark text-white" style={{ height: "100vh" }}>
                 <Card.Img
                     src="https://www.willflyforfood.net/wp-content/uploads/2021/09/ethiopian-food-yetsom-beyaynetu.jpg"

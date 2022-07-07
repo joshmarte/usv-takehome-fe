@@ -8,23 +8,17 @@
     width: 100vw;
 }
 
-.NavBar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 55px;
+.navbar {
+    height: 65px;
     font-size: larger;
 }
 
-.NavBar .nav-item {
+.nav-item {
     margin-top: 5px;
 }
 
 #content-wrap {
-    padding-bottom: 2rem;
+    padding-bottom: 30px;
 }
 
 .footer-container {
@@ -66,9 +60,6 @@
 }
 
 @media screen and (max-device-width: 992px) {
-    .App {
-        width: fit-content;
-    }
     .home-container img {
         display: none;
     }

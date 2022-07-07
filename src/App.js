@@ -16,8 +16,8 @@ import AllReservations from "./Pages/AllReservations";
 function App() {
     return (
         <main className="App">
+            <Navigation />
             <div id="content-wrap">
-                <Navigation />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/restaurants" element={<ViewRestaurants />} />
