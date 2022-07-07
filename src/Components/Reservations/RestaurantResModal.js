@@ -34,9 +34,12 @@ export default function RestaurantResModal({
         let today = new Date().toLocaleDateString("en-US");
         if (dates) {
             return dates
-                .filter((item, index) => {
+                .filter((item, index, self) => {
                     // ONLY SHOW DATES AFTER TODAY
-                    return new Date(item) >= new Date(today);
+                    return (
+                        self.indexOf(item) === index &&
+                        new Date(item) >= new Date(today)
+                    );
                 })
                 .map((item, index) => {
                     return (

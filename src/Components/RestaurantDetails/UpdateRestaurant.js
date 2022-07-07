@@ -113,7 +113,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                 keyboard={false}
                 scrollable={true}
                 centered
-                style={{ marginTop: "50px" }}
+                style={{ marginTop: "10px" }}
             >
                 <Modal.Header closeButton>
                     <Modal.Title>{`Update ${restaurant.name}`}</Modal.Title>
@@ -121,7 +121,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                 <Modal.Body autoFocus>
                     <Form validated>
                         <Container>
-                            <Row>
+                            <Row className="update-name-container">
                                 <Col>
                                     <Form.Group
                                         className="mb-3"
@@ -175,7 +175,7 @@ export default function UpdateRestaurant({ handleClose, show, restaurant }) {
                                     />
                                 </Form.Group>
                             </Row>
-                            <Row>
+                            <Row className="update-location-container">
                                 <Col>
                                     <Form.Group
                                         className="mb-3"

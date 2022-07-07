@@ -41,6 +41,11 @@
     gap: 10px;
 }
 
+.allrestaurants-container {
+    margin: 50px;
+    padding-bottom: 100px;
+}
+
 @media screen and (max-device-width: 992px) {
     .search-filter {
         width: 90vw;
@@ -62,5 +67,8 @@
     }
     .restaurants-container {
         min-width: none;
+    }
+    .allrestaurants-container {
+        margin: 0;
     }
 }

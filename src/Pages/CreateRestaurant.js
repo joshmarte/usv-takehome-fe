@@ -135,7 +135,7 @@ export default function CreateRestaurant() {
                                 <Form.Label>Phone</Form.Label>
                                 <Form.Control
                                     type="tel"
-                                    placeholder="Restaurant Tel"
+                                    placeholder="Tele ex: 0123456789"
                                     value={newRestaurant.phoneNumber}
                                     onChange={handleChange}
                                     required

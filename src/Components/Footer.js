@@ -15,7 +15,7 @@ export default function Footer() {
                         alt="Hungry Humans"
                         style={{ width: "3vw", heigh: "auto" }}
                     />
-                    Hungy Humans
+                    Hungry Humans
                 </Card.Title>
                 <Card.Body>
                     <ul>

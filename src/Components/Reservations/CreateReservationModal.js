@@ -183,7 +183,7 @@ export default function CreateReservation({ restaurant }) {
                                         <Form.Label>Phone number</Form.Label>
                                         <Form.Control
                                             type="tel"
-                                            placeholder="Phone number"
+                                            placeholder="Tele ex: 0123456789"
                                             value={reservation.phoneNumber}
                                             onChange={handleChange}
                                             required

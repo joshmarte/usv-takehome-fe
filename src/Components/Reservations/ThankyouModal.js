@@ -16,6 +16,7 @@ export default function ThanyouModal({
     const handleClose = () => {
         setThankyouShow(false);
         navigate(`/restaurants/${id}`);
+        window.location.reload();
     };
 
     return (

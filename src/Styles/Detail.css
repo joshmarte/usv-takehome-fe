@@ -23,6 +23,13 @@
         flex-direction: column;
         gap: 20px;
     }
+    .update-name-container {
+        flex-direction: column;
+    }
+
+    .update-location-container {
+        flex-direction: column;
+    }
 
     .update-tables-container {
         flex-direction: column;

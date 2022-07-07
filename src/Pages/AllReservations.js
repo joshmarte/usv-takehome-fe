@@ -42,21 +42,18 @@ export default function AllReservations() {
     }, [dataRecieved]);
 
     return (
-        <div
-            className="allrestaurants-container"
-            style={{ margin: "100px", paddingBottom: "100px" }}
-        >
+        <div className="allrestaurants-container">
             {dataRecieved ? (
-                <Table striped bordered hover variant="dark">
+                <Table striped bordered hover responsive variant="dark">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
+                            {/* <th>Phone Number</th>
+                            <th>Email</th> */}
                             <th>Time</th>
-                            <th>Number of Guests</th>
+                            <th>Guests</th>
                             <th>Restaurant</th>
                         </tr>
                     </thead>
@@ -67,8 +64,8 @@ export default function AllReservations() {
                                     <td>{index + 1}</td>
                                     <td>{item.firstName}</td>
                                     <td>{item.lastName}</td>
-                                    <td>{item.phoneNumber}</td>
-                                    <td>{item.email}</td>
+                                    {/* <td>{item.phoneNumber}</td>
+                                    <td>{item.email}</td> */}
                                     <td>{formatTime(item.time)}</td>
                                     <td>{item.numGuests}</td>
                                     <td>

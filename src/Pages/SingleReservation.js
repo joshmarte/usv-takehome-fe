@@ -27,6 +27,14 @@ export default function SingleReservation({ reservations, open, close }) {
                 let times = reservations.map((items) => {
                     return new Date(items.time).toLocaleDateString("en-US");
                 });
+
+                //SORT TIMES
+                times.sort((a, b) => {
+                    if (new Date(a) > new Date(b)) {
+                        return -1;
+                    }
+                });
+
                 setDates(times);
             }
         }
