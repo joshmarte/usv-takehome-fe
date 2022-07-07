@@ -49,7 +49,7 @@ export default function Navigation() {
                                 Reservations
                             </Nav.Link>
                             <Nav.Link href="/newRestaurant">
-                                Create a Restaurant
+                                Create Restaurant
                             </Nav.Link>
                         </Nav>
                     </Offcanvas.Body>
