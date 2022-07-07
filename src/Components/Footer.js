@@ -20,19 +20,19 @@ export default function Footer() {
                 <Card.Body>
                     <ul>
                         <li>
-                            <a href="/">About</a>
+                            <a>About</a>
                         </li>
                         <li>
-                            <a href="/">Support</a>
+                            <a>Support</a>
                         </li>
                         <li>
-                            <a href="/">Careers</a>
+                            <a>Careers</a>
                         </li>
                         <li>
                             <a>Terms</a>
                         </li>
                         <li>
-                            <a href="/">Privacy</a>
+                            <a>Privacy</a>
                         </li>
                     </ul>
                 </Card.Body>

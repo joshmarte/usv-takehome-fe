@@ -1,6 +1,8 @@
 // DEPENDENCIES
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
+
 //STYLE
 import "../Styles/Detail.css";
 //COMPONENTS
@@ -43,9 +45,16 @@ export default function SingleDetail() {
                 margin: "0 auto",
                 marginTop: "100px",
                 position: "relative",
+                paddingBottom: "100px",
             }}
         >
-            <ResaurantDetails restaurant={restaurant} />
+            {restaurant ? (
+                <ResaurantDetails restaurant={restaurant} />
+            ) : (
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            )}
         </div>
     );
 }

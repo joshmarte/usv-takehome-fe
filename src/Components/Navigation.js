@@ -2,12 +2,17 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import Offcanvas from "react-bootstrap/Offcanvas";
+// ASSETS
 import logo from "../Assets/food.png";
 
 export default function Navigation() {
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Container style={{ marginLeft: "0px", padding: " 0px 2rem" }}>
+        <Navbar expand="md" bg="dark" variant="dark">
+            <Container
+                fluid
+                style={{ marginLeft: "0px", padding: " 0px 2rem" }}
+            >
                 <Navbar.Brand
                     href="/"
                     style={{
@@ -26,16 +31,29 @@ export default function Navigation() {
                     />{" "}
                     Hungry Humans
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav>
-                        <Nav.Link href="/restaurants">Restaurants</Nav.Link>
-                        <Nav.Link href="/reservations">Reservations</Nav.Link>
-                        <Nav.Link href="/newRestaurant">
-                            Create a Restaurant
-                        </Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
+                <Navbar.Toggle aria-controls="offcanvasNavbar-expand-md" />
+                <Navbar.Offcanvas
+                    id={`offcanvasNavbar-expand-md`}
+                    aria-labelledby={`offcanvasNavbarLabel-expand-md`}
+                    placement="end"
+                >
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title id={`offcanvasNavbarLabel-expand-md`}>
+                            Menu
+                        </Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <Nav>
+                            <Nav.Link href="/restaurants">Restaurants</Nav.Link>
+                            <Nav.Link href="/reservations">
+                                Reservations
+                            </Nav.Link>
+                            <Nav.Link href="/newRestaurant">
+                                Create a Restaurant
+                            </Nav.Link>
+                        </Nav>
+                    </Offcanvas.Body>
+                </Navbar.Offcanvas>
             </Container>
         </Navbar>
     );

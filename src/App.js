@@ -17,18 +17,13 @@ function App() {
     return (
         <main className="App">
             <Navigation />
-            <div id="content-wrap">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/restaurants" element={<ViewRestaurants />} />
-                    <Route path="/restaurants/:id" element={<SingleDetail />} />
-                    <Route
-                        path="/newRestaurant"
-                        element={<CreateRestaurant />}
-                    />
-                    <Route path="/reservations" element={<AllReservations />} />
-                </Routes>
-            </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/restaurants" element={<ViewRestaurants />} />
+                <Route path="/restaurants/:id" element={<SingleDetail />} />
+                <Route path="/newRestaurant" element={<CreateRestaurant />} />
+                <Route path="/reservations" element={<AllReservations />} />
+            </Routes>
             <Footer />
         </main>
     );

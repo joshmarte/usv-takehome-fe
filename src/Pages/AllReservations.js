@@ -42,7 +42,10 @@ export default function AllReservations() {
     }, [dataRecieved]);
 
     return (
-        <div className="allrestaurants-container" style={{ margin: "100px" }}>
+        <div
+            className="allrestaurants-container"
+            style={{ margin: "100px", paddingBottom: "100px" }}
+        >
             {dataRecieved ? (
                 <Table striped bordered hover variant="dark">
                     <thead>

@@ -37,6 +37,9 @@ export default function CreateRestaurant() {
         },
     });
 
+    // STATE FOR FORM VALIDATION
+    const [validated, setValidated] = useState(false);
+
     // STATE FOR TIME INTERVAL DROPDOWN
     const [intervals, setInterval] = useState(
         interval("00:00:00", "24:00:00", false)
@@ -62,55 +65,54 @@ export default function CreateRestaurant() {
 
     // POST CALL
     const handleSubmit = (event) => {
-        event.preventDefault();
-        let open = militaryTime(newRestaurant.openingTime);
-        let close = militaryTime(newRestaurant.closingTime);
+        const form = event.currentTarget;
 
-        setNewRestaurant((newRestaurant) => ({
-            ...newRestaurant,
-            ["openingTime"]: open,
-        }));
-        setNewRestaurant((newRestaurant) => ({
-            ...newRestaurant,
-            ["closingTime"]: close,
-        }));
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            let open = militaryTime(newRestaurant.openingTime);
+            let close = militaryTime(newRestaurant.closingTime);
 
-        async function createRestaurant() {
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+            setNewRestaurant((newRestaurant) => ({
+                ...newRestaurant,
+                ["openingTime"]: open,
+            }));
+            setNewRestaurant((newRestaurant) => ({
+                ...newRestaurant,
+                ["closingTime"]: close,
+            }));
 
-            console.log(newRestaurant);
+            async function createRestaurant() {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify(newRestaurant);
+                var raw = JSON.stringify(newRestaurant);
 
-            var requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow",
-            };
+                var requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: "follow",
+                };
 
-            let postRestaurant = await fetch(
-                `${API}/restaurants`,
-                requestOptions
-            );
-            let postData = await postRestaurant.json();
+                let postRestaurant = await fetch(
+                    `${API}/restaurants`,
+                    requestOptions
+                );
+                let postData = await postRestaurant.json();
+            }
+            createRestaurant();
+            navigate("/");
         }
-        createRestaurant();
-        navigate("/");
+
+        setValidated(true);
     };
 
     return (
-        <div
-            className="createRestaurant-container"
-            style={{
-                width: "60vw",
-                margin: "100px auto",
-            }}
-        >
+        <div className="createRestaurant-container">
             <h3 style={{ paddingLeft: "10px" }}>Create a Restaurant Form:</h3>
             <br></br>
-            <Form validated onSubmit={handleSubmit}>
+            <Form validated={validated} onSubmit={handleSubmit}>
                 <Container>
                     <Row>
                         <Col>
@@ -160,7 +162,7 @@ export default function CreateRestaurant() {
                             />
                         </Form.Group>
                     </Row>
-                    <Row>
+                    <Row className="createForm-singleRow">
                         <Col>
                             <Form.Group className="mb-3" controlId="location">
                                 <Form.Label>Location</Form.Label>
@@ -213,7 +215,7 @@ export default function CreateRestaurant() {
                         </Col>
                     </Row>
 
-                    <Row>
+                    <Row className="createForm-singleRow">
                         <Col>
                             <FormGroup className="mb-3" controlId="openingTime">
                                 <Form.Label>Open Time</Form.Label>
@@ -274,7 +276,7 @@ export default function CreateRestaurant() {
                         </Col>
                     </Row>
 
-                    <Row>
+                    <Row className="createForm-singleRow">
                         <div>Tables:</div>
 
                         <Col>
@@ -337,6 +339,7 @@ export default function CreateRestaurant() {
                     </Row>
                     <Button
                         variant="primary"
+                        onClick={handleSubmit}
                         type="submit"
                         style={{ margin: "0 auto" }}
                     >
