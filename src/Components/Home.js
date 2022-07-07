@@ -20,7 +20,7 @@ export default function Home() {
 
     return (
         <div className="home-container">
-            <Card className="bg-dark text-white" style={{ height: "100vh" }}>
+            <Card className="bg-dark text-white">
                 <Card.Img
                     src="https://www.willflyforfood.net/wp-content/uploads/2021/09/ethiopian-food-yetsom-beyaynetu.jpg"
                     alt="Ethopian Food"
