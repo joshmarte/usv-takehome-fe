@@ -1,14 +1,15 @@
 export const details = {
     cuisine: [
-        "Japanese",
-        "Thai",
-        "French",
-        "Pizza",
-        "Korean",
         "American",
-        "Mexican",
-        "Greek",
         "Chinese",
+        "French",
+        "Greek",
+        "Japanese",
+        "Korean",
+        "Italian",
+        "Mexican",
+        "Thai",
+        "Pizza",
         "Other",
     ],
     location: [
@@ -18,8 +19,8 @@ export const details = {
         "Bronx",
         "Manhattan",
         "Staten Island",
+        "Long Island",
         "Boston",
         "D.C.",
-        "Long Island",
     ],
 };

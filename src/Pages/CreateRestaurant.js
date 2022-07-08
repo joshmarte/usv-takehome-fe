@@ -26,9 +26,9 @@ export default function CreateRestaurant() {
         phoneNumber: "",
         openingTime: "12:00 PM",
         closingTime: "10:30 PM",
-        price: "",
-        cuisine: "",
-        location: "",
+        price: "$",
+        cuisine: "American",
+        location: "New York",
         diningRestriction: "Delivery Only",
         tables: {
             twoPersonTables: 0,
@@ -36,9 +36,6 @@ export default function CreateRestaurant() {
             eightPersonTables: 0,
         },
     });
-
-    // STATE FOR FORM VALIDATION
-    const [validated, setValidated] = useState(false);
 
     // STATE FOR TIME INTERVAL DROPDOWN
     const [intervals, setInterval] = useState(
@@ -63,56 +60,58 @@ export default function CreateRestaurant() {
         }
     };
 
+    // PRE POST CALL DATA FORMAT
+    const handleOpenCloseTime = () => {
+        let open = militaryTime(newRestaurant.openingTime);
+        let close = militaryTime(newRestaurant.closingTime);
+
+        setNewRestaurant((newRestaurant) => ({
+            ...newRestaurant,
+            ["openingTime"]: open,
+        }));
+        setNewRestaurant((newRestaurant) => ({
+            ...newRestaurant,
+            ["closingTime"]: close,
+        }));
+    };
+
     // POST CALL
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
+        event.preventDefault();
 
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            let open = militaryTime(newRestaurant.openingTime);
-            let close = militaryTime(newRestaurant.closingTime);
+        handleOpenCloseTime();
+        console.log(newRestaurant);
+        async function createRestaurant() {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            console.log(newRestaurant);
+            var raw = JSON.stringify(newRestaurant);
 
-            setNewRestaurant((newRestaurant) => ({
-                ...newRestaurant,
-                ["openingTime"]: open,
-            }));
-            setNewRestaurant((newRestaurant) => ({
-                ...newRestaurant,
-                ["closingTime"]: close,
-            }));
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow",
+            };
 
-            async function createRestaurant() {
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
+            let postRestaurant = await fetch(
+                `${API}/restaurants`,
+                requestOptions
+            );
 
-                var raw = JSON.stringify(newRestaurant);
-
-                var requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: "follow",
-                };
-
-                let postRestaurant = await fetch(
-                    `${API}/restaurants`,
-                    requestOptions
-                );
-                let postData = await postRestaurant.json();
-            }
-            createRestaurant();
-            navigate("/");
+            let postData = await postRestaurant.json();
         }
 
-        setValidated(true);
+        createRestaurant();
+
+        // navigate("/");
     };
 
     return (
         <div className="createRestaurant-container">
             <h3 style={{ paddingLeft: "10px" }}>Create a Restaurant Form:</h3>
             <br></br>
-            <Form validated={validated} onSubmit={handleSubmit}>
+            <Form validated onSubmit={handleSubmit}>
                 <Container>
                     <Row>
                         <Col>
@@ -339,7 +338,6 @@ export default function CreateRestaurant() {
                     </Row>
                     <Button
                         variant="primary"
-                        onClick={handleSubmit}
                         type="submit"
                         style={{ margin: "0 auto" }}
                     >
