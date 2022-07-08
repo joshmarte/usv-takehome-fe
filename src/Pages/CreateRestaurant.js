@@ -60,33 +60,36 @@ export default function CreateRestaurant() {
         }
     };
 
-    // PRE POST CALL DATA FORMAT
-    const handleOpenCloseTime = () => {
+    // HANDLE FORMAT DATA BEFORE POST
+    const handleFormat = (formData) => {
         let open = militaryTime(newRestaurant.openingTime);
         let close = militaryTime(newRestaurant.closingTime);
 
-        setNewRestaurant((newRestaurant) => ({
-            ...newRestaurant,
-            ["openingTime"]: open,
-        }));
-        setNewRestaurant((newRestaurant) => ({
-            ...newRestaurant,
-            ["closingTime"]: close,
-        }));
+        formData["openingTime"] = open;
+        formData["closingTime"] = close;
+
+        return formData;
     };
 
     // POST CALL
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        handleOpenCloseTime();
-        console.log(newRestaurant);
+        // setNewRestaurant((newRestaurant) =>  ({
+        //     ...newRestaurant,
+        //     ["openingTime"]: open,
+        // }));
+        // setNewRestaurant((newRestaurant) => ({
+        //     ...newRestaurant,
+        //     ["closingTime"]: close,
+        // }));
+
         async function createRestaurant() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-            console.log(newRestaurant);
-            var raw = JSON.stringify(newRestaurant);
 
+            var raw = JSON.stringify(handleFormat(newRestaurant));
+            console.log(raw);
             var requestOptions = {
                 method: "POST",
                 headers: myHeaders,
@@ -98,13 +101,10 @@ export default function CreateRestaurant() {
                 `${API}/restaurants`,
                 requestOptions
             );
-
             let postData = await postRestaurant.json();
         }
-
         createRestaurant();
-
-        // navigate("/");
+        navigate("/");
     };
 
     return (
