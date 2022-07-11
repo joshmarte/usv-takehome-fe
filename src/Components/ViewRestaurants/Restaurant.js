@@ -65,6 +65,7 @@ export default function Restaurant({ data }) {
                     >
                         View Reservations
                     </Button>
+                    <div>{data.reservationCount}</div>
                 </Card.Body>
             </Card>
         </div>

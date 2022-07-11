@@ -69,7 +69,19 @@ export default function ViewRestaurants() {
                 );
                 let apiData = await response.json();
 
-                setRestaurants(apiData.restaurants);
+                let topRestaurants = apiData.restaurants
+                    .map((item) => {
+                        return {
+                            ...item,
+                            ["reservationCount"]: item.reservations.length,
+                        };
+                    })
+                    .sort((a, b) => {
+                        return b.reservationCount - a.reservationCount;
+                    })
+                    .slice(0, 3);
+
+                setRestaurants(topRestaurants);
 
                 setReceivedData(true);
             }
