@@ -68,20 +68,14 @@ export default function ViewRestaurants() {
                     }`
                 );
                 let apiData = await response.json();
-
-                let topRestaurants = apiData.restaurants
-                    .map((item) => {
-                        return {
-                            ...item,
-                            ["reservationCount"]: item.reservations.length,
-                        };
-                    })
-                    .sort((a, b) => {
-                        return b.reservationCount - a.reservationCount;
-                    })
-                    .slice(0, 3);
-
-                setRestaurants(topRestaurants);
+                // let sortedRestaurants = apiData.restaurants.sort((a, b) => {
+                //     if (a.name > b.name) {
+                //         return 1;
+                //     } else {
+                //         return -1;
+                //     }
+                // });
+                setRestaurants(apiData.restaurants);
 
                 setReceivedData(true);
             }
@@ -111,6 +105,8 @@ export default function ViewRestaurants() {
                     userFilters={userFilters}
                     setUserFilters={setUserFilters}
                     setSearchTerm={setSearchTerm}
+                    restaurants={restaurants}
+                    setRestaurants={setRestaurants}
                 />
                 {!receivedData ? (
                     <Spinner animation="border" role="status">
@@ -165,3 +161,15 @@ const getParamsString = (filters) => {
 
     return paramString.join("&");
 };
+
+// let topRestaurants = apiData.restaurants
+//     .map((item) => {
+//         return {
+//             ...item,
+//             ["reservationCount"]: item.reservations.length,
+//         };
+//     })
+//     .sort((a, b) => {
+//         return b.reservationCount - a.reservationCount;
+//     })
+//     .slice(0, 3);

@@ -67,6 +67,19 @@ export default function Filters(props) {
         });
     };
 
+    // HANDLE SORT BUTTON
+    const handleSort = (event) => {
+        let sortedRestaurants = props.restaurants.sort((a, b) => {
+            if (a.name > b.name) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+        props.setRestaurants([...sortedRestaurants]);
+        console.log(props.restaurants);
+    };
+
     return (
         <div className="filters-container">
             <div className="cuisineDropDown">
@@ -156,6 +169,7 @@ export default function Filters(props) {
                         </Form>
                     </Form.Group>
                 </DropdownButton>
+                <Button onClick={handleSort}>Sort Me</Button>
             </div>
             <div className="reset-button">
                 <Button
